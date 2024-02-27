@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Anton';
+  src: local('Anton'), url(./fonts/Anton-Regular.ttf) format('woff');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+@font-face {
+  font-family: 'NationalPark';
+  src: local('NationalPark'), url(./fonts/NationalPark-Regular.otf) format('woff');
+}
+@font-face {
+  font-family: 'NationalPark-Thin';
+  src: local('NationalPark-Thin'), url(./fonts/NationalPark-Thin.otf) format('woff');
+}
+@font-face {
+  font-family: 'NationalPark-Heavy';
+  src: local('NationalPark-Heavy'), url(./fonts/NationalPark-Heavy.otf) format('woff');
+}
+
+
+body {
+  .Navbar-icon-btn img {
+    border-radius: 50%;
+  }
+}
+
+.title-font-style {
+  font-family: NationalPark;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 2px;
+  text-align: left;
+  color: #FFFFFF;
+}
+
+.middle-text-style {
+  font-family: NationalPark;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+}
+
+.middle-right-title-style {
+  font-family: NationalPark;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+}
+
+.middle-right-desc-style {
+  font-family: NationalPark;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: #FFFFFFB8;
+}
+.middle-right-title-style-hover {
+  color: #FE609D;
+}
+.middle-right-desc-style-hover {
+  color: #FE609D;
+}
+.middle-right-main {
+  max-width: 320px;
+}
+
+.no-select-font {
+  color: #FFFFFFA3;
+}
+
+.xian {
+  background: #FFFFFF3D;
+  width: 2px;
+}
+
+.xian-hover {
+  background: #FE609D;
+}
+.xian-1 {
+  height: 50px;
+}
+.xian-2 {
+  height: 150px;
+}
+.xian-3 {
+  height: 140px;
+}
+.xian-4 {
+  height: 150px;
+}
+.xian-5 {
+  height: 150px;
+}
+
+.qiu {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #FFFFFF3D;
+}
+.qiu-hover {
+  width: 24px;
+  height: 24px;
+  background: #FE609D;
+}
+.bottom-card-left {
+  background: #FFFFFF;
+  box-shadow: 0px 4px 24px 0px #85CBE4;
+
+}
+
+.bottom-tab-container {
+  border-bottom: 1px solid #EEEEEE;
+}
+
+.bottom-tab {
+  font-family: NationalPark;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 1px;
+  text-align: center;
+  color: #131313;
+  width: 214px;
+  height: 48px;
+  cursor: pointer;
+}
+
+.bottom-tab-hover {
+  color: #07CEFA;
+  border-bottom: 2px solid #07CEFA;
+}
+
+.bottom-card-img {
+  width: 96px;
+  height: 96px;
+}
