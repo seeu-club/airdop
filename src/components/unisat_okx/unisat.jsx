@@ -24,17 +24,17 @@ export default function Unisat(){
             };
         }
         checkUnisat().then();
-        getUnisatNet();
+        // getUnisatNet();
     }, []);
 
-    const getUnisatNet = async() =>{
-        try {
-            let res = await unisat.getNetwork();
-            console.log(res)
-        } catch (e) {
-            console.log("network",e);
-        }
-    }
+    // const getUnisatNet = async() =>{
+    //     try {
+    //         let res = await unisat.getNetwork();
+    //         console.log(res)
+    //     } catch (e) {
+    //         console.log("network",e);
+    //     }
+    // }
 
     const connect = async() =>{
         if(disable)return;
