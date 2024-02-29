@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Unisat_okx from "./unisat_okx/unisat_okx";
 
 const Footer = () => {
     const [showSeeuTab, setActiveTab] = useState(true)
@@ -22,22 +23,23 @@ const Footer = () => {
                 </div>
 
                 <div id="tab-content-container">
-                    {showSeeuTab ? 
+                    {showSeeuTab ?
                     <div id="tab-content-seeu"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
-                        <div className='mt-2'>
-                            <img className="bottom-card-img" src="logo3.png" alt=""/>
-                        </div>
-                        <div className="mt-6 font-bold text-2xl font-['NationalPark'] tracking-wider">
-                            Connect your Seeu Wallet
-                        </div>
-                        <div>
-                            <button className="bg-gradient-to-b from-[#07CEFA] to-[#0794FA] hover:from-[#FE609D] hover:to-yellow-500  text-white font-bold w-[25rem] h-[3rem] py-3 px-4 rounded-2xl font-bold text-base mt-10">
-                                Connect
-                            </button>
-                        </div>
-                        <div className="mt-6 text-sm font-['NationalPark'] text-[#727778]">
-                            Some simple introductions and descriptions of the text station space Balabala
-                        </div>
+                        <Unisat_okx />
+                        {/*<div className='mt-2'>*/}
+                        {/*    <img className="bottom-card-img" src="logo3.png" alt=""/>*/}
+                        {/*</div>*/}
+                        {/*<div className="mt-6 font-bold text-2xl font-['NationalPark'] tracking-wider">*/}
+                        {/*    Connect your Seeu Wallet*/}
+                        {/*</div>*/}
+                        {/*<div>*/}
+                        {/*    <button className="bg-gradient-to-b from-[#07CEFA] to-[#0794FA] hover:from-[#FE609D] hover:to-yellow-500  text-white font-bold w-[25rem] h-[3rem] py-3 px-4 rounded-2xl font-bold text-base mt-10">*/}
+                        {/*        Connect*/}
+                        {/*    </button>*/}
+                        {/*</div>*/}
+                        {/*<div className="mt-6 text-sm font-['NationalPark'] text-[#727778]">*/}
+                        {/*    Some simple introductions and descriptions of the text station space Balabala*/}
+                        {/*</div>*/}
                     </div>
                      :
                      <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
@@ -55,8 +57,8 @@ const Footer = () => {
                         <div className="mt-6 text-sm font-['NationalPark'] text-[#727778]">
                             Some simple introductions and descriptions of the text station space Balabala
                         </div>
-                    </div>   
-                    } 
+                    </div>
+                    }
                 </div>
 
 
