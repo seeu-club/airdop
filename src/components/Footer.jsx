@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Unisat_okx from "./unisat_okx/unisat_okx";
+import Seeu from "./seeu";
 
 const Footer = () => {
     const [showSeeuTab, setActiveTab] = useState(true)
@@ -24,8 +24,10 @@ const Footer = () => {
 
                 <div id="tab-content-container">
                     {showSeeuTab ?
-                    <div id="tab-content-seeu"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
-                        <Unisat_okx />
+                    <div id="tab-content-seeu"  className="flex  flex-col">
+                        <Seeu />
+
+
                         {/*<div className='mt-2'>*/}
                         {/*    <img className="bottom-card-img" src="logo3.png" alt=""/>*/}
                         {/*</div>*/}

@@ -83,8 +83,8 @@ export default function Modal({handleClose}){
             </CloseBox>
             <TitleBox>Choose Wallet</TitleBox>
             <UlBox>
-                <OkxBox />
-                <UnisatBox />
+                <OkxBox handleClose={handleClose} />
+                <UnisatBox handleClose={handleClose} />
 
             </UlBox>
         </ModalBg>
