@@ -12,7 +12,7 @@ const Footer = () => {
     <div className="flex flex-col items-center pt-24 border-2 border-blue-500 bg-no-repeat bg-center h-[60rem] bg-[#C6F0FF]">
 
         <div className="max-w-6xl flex ">
-            <div className="columns-[33.75rem] bottom-card-left py-6 px-12">
+            <div className="columns-[33.75rem] bottom-card-left py-6 px-12 rounded-l-3xl">
                 <div className="bottom-tab-container flex gap-8" >
                     <div className={showSeeuTab ? "bottom-tab bottom-tab-hover" : "bottom-tab"} onClick={() => setActiveTab(true)}>
                         Seeu
