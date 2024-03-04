@@ -130,6 +130,7 @@ export default function SignModal(){
 
     const {unisat,okxwallet} = window;
     useEffect(() => {
+        //ToDO:需要調用接口獲取message
         setTimeout(()=>{
             setMsg('e3qrwB8buu')
         },500)
@@ -180,6 +181,7 @@ export default function SignModal(){
     const bindMsg = () =>{
         console.log("=====bindMsg")
         store.dispatch(saveShowSign(false));
+        //ToDO:需要調用接口提交claim
     }
 
     const handleCloseSign = () =>{
