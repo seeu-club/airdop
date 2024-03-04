@@ -1,7 +1,8 @@
-import OkxImg from "../../assets/okx.png";
 import {useEffect, useRef, useState} from "react";
 import store from "../../store";
-import {saveAccount, saveType} from "../../store/reducer";
+import {saveAccount, saveShowSign, saveType} from "../../store/reducer";
+
+import OkxImg from "../../assets/okx.png";
 
 export default function Okx({handleClose}){
 
@@ -55,14 +56,20 @@ export default function Okx({handleClose}){
     const handleAccountsChanged = () => {
 
         disconnect()
+        // self.accounts = _accounts;
+        // if (_accounts.length > 0) {
+        //     store.dispatch(saveAccount(_accounts[0]));
+        // }
     };
 
     const disconnect = () =>{
+
         store.dispatch(saveAccount(null));
         store.dispatch(saveType(null));
+        store.dispatch(saveShowSign(null));
     }
 
-    return <li onClick={()=>connect()}>
+    return <li onClick={() => connect()}>
         <img src={OkxImg} alt=""/>
         <div className="rht">
             OKX

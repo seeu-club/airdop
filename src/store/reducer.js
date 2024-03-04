@@ -17,6 +17,12 @@ const mainSlice = createSlice({
         saveJoyid(state, action) {
             state.joyid_account = action.payload;
         },
+        saveSignature(state, action) {
+            state.signature = action.payload;
+        },
+        saveShowSign(state, action) {
+            state.showSign = action.payload;
+        },
     },
 });
 
@@ -24,6 +30,8 @@ export const {
     saveAccount,
     saveType,
     saveJoyid,
+    saveSignature,
+    saveShowSign,
     saveLoading
 } = mainSlice.actions;
 export default mainSlice.reducer;

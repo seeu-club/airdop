@@ -2,6 +2,11 @@ import styled from "styled-components";
 import CloseImg from "../../assets/close.png";
 import SignIcon from "../../assets/signIcon.png";
 import CopyImg from "../../assets/copy.png";
+import {useSelector} from "react-redux";
+import {useEffect, useState} from "react";
+import store from "../../store";
+import {saveJoyid, saveShowSign, saveSignature} from "../../store/reducer";
+
 
 const Mask = styled.div`
     background: rgba(0,0,0,0.5);
@@ -10,7 +15,7 @@ const Mask = styled.div`
     height: 100vh;
     left: 0;
     top: 0;
-    z-index: 9;
+    z-index: 99;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,20 +122,87 @@ const BtnBox = styled.div`
 `
 
 export default function SignModal(){
+    const account = useSelector(store => store.account);
+    const type = useSelector(store => store.type);
+    const signature = useSelector(store => store.signature)
+    const [msg,setMsg] = useState();
+    const [input,setInput] = useState("")
+
+    const {unisat,okxwallet} = window;
+    useEffect(() => {
+        setTimeout(()=>{
+            setMsg('e3qrwB8buu')
+        },500)
+    }, []);
+
+    useEffect(() => {
+        if(!msg)return;
+        signMessageInput()
+
+
+    }, [msg]);
+
+    const signMessageInput = () =>{
+            if(!account || !type)return;
+            if(type === "OKX"){
+                OkxSign()
+            }else if(type === "Unisat"){
+                UnisatSign()
+            }
+    }
+    const UnisatSign = async() =>{
+        try{
+            const sign = await unisat.signMessage(msg);
+            console.log(sign)
+            setInput(sign)
+            store.dispatch(saveSignature(sign));
+
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
+    const OkxSign = async () =>{
+
+        try{
+            const sign = await okxwallet.bitcoin.signMessage(msg, 'ecdsa');
+            console.log(sign)
+            setInput(sign)
+            store.dispatch(saveSignature(sign));
+
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
+    const bindMsg = () =>{
+        console.log("=====bindMsg")
+        store.dispatch(saveShowSign(false));
+    }
+
+    const handleCloseSign = () =>{
+        store.dispatch(saveShowSign(false));
+    }
+
+
+
     return <Mask>
         <ModalBg>
-            <CloseBox>
+            <CloseBox onClick={()=>handleCloseSign()}>
                 <img src={CloseImg} alt=""/>
             </CloseBox>
             <TitleInfo>
-                <img src={SignIcon} alt=""/>
+                <img src="signIcon.png" alt=""/>
                 <span>Signature Info</span>
             </TitleInfo>
 
             <FlexBox>
                 <TitleBox>Message</TitleBox>
                 <FlexLine>
-                    <div className="copyCode">e3qrwB8buu</div>
+
+                    <div className="copyCode">{msg}</div>
                     <img src={CopyImg} alt=""/>
                 </FlexLine>
                 <Tips>The message will be signed with magic bytes “Nervos Message”</Tips>
@@ -138,11 +210,11 @@ export default function SignModal(){
             <FlexBox>
                 <TitleBox>Signature</TitleBox>
                 <InputBox>
-                    <input type="text" placeholder="Enter signature" />
+                    <input type="text" placeholder="Enter signature" value={input} readOnly={true}  />
                 </InputBox>
             </FlexBox>
             <BtnGroup>
-                <BtnBox>Bind</BtnBox>
+                <BtnBox onClick={()=>bindMsg()}>Bind</BtnBox>
             </BtnGroup>
         </ModalBg>
     </Mask>

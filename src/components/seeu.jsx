@@ -1,9 +1,12 @@
 import Unisat_okx from "./unisat_okx/unisat_okx";
 import Joyid from "./joyid/joyid";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import SelectedImg from "../assets/selected.png";
 import {useSelector} from "react-redux";
+import SignModal from "./unisat_okx/signModal";
+import store from "../store";
+import {saveJoyid, saveShowSign} from "../store/reducer";
 
 const Box = styled.div`
     margin-top: 24px;
@@ -48,7 +51,7 @@ const LftBox = styled.div`
     flex-direction: column;
     .li{
         margin-left: 16px;
-        border-left:1px dashed #E0E2EC;
+        border-left:2px dashed #E0E2EC;
         padding-left: 37px;
         min-height: 16px;
         position: relative;
@@ -102,15 +105,31 @@ export default function Seeu(){
     const account = useSelector(store => store.account);
     const type = useSelector(store => store.type);
     const joyid_account = useSelector(store => store.joyid_account);
+    const signature = useSelector(store => store.signature);
+    const showSign = useSelector(store => store.showSign);
 
-    return <><Box>
+
+    useEffect(() => {
+        console.log("====",!account,showSign === false)
+        if(!account || showSign === false)return;
+        console.error("=======")
+        store.dispatch(saveShowSign(true));
+
+
+    }, [account,signature]);
+
+    return <>
+        {
+            showSign && <SignModal />
+        }
+        <Box>
         <LftBox>
-            <div className={!!account && (type === "Unisat" || type === "OKX") ? "li first active" : "li first"}>
+            <div className={!!joyid_account ? "li first active" : "li first"}>
                 <div className="selected">
                     <img src={SelectedImg} alt=""/>
                 </div>
             </div>
-            <div className={!!joyid_account ? "li second active" : "li second"}>
+            <div className={!!account && (type === "Unisat" || type === "OKX") ? "li second active" : "li second"}>
                 <div className="selected">
                     <img src={SelectedImg} alt=""/>
                 </div>
@@ -122,8 +141,8 @@ export default function Seeu(){
             </div>
         </LftBox>
         <UlBox>
-            <Unisat_okx/>
             <Joyid/>
+            <Unisat_okx/>
             <ButtonBox disabled={!account || !joyid_account}>Claim</ButtonBox>
 
         </UlBox>

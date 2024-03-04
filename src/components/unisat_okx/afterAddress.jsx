@@ -6,7 +6,7 @@ import {shortAddress} from "../../utils/global";
 import JoyidImg from "../../assets/joyid.png";
 import DisconnectImg from "../../assets/disconnect.png";
 import store from "../../store";
-import {saveAccount, saveJoyid, saveType} from "../../store/reducer";
+import {saveAccount, saveJoyid, saveShowSign, saveType} from "../../store/reducer";
 
 const AfterBox = styled.div`
     display: flex;
@@ -64,6 +64,7 @@ export default function AfterAddress(){
         store.dispatch(saveAccount(null));
         store.dispatch(saveType(null));
         store.dispatch(saveJoyid(null));
+        store.dispatch(saveShowSign(null));
     }
 
     return <AfterBox>

@@ -12,7 +12,7 @@ const Box = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-radius: 16px;
-    margin: 16px 0;
+
     height: 191px;
     display: flex;
     flex-direction: column;
@@ -59,7 +59,6 @@ const Btn = styled.button`
 `
 
 export default function Joyid (){
-    const account = useSelector(store => store.account);
     const joyid_account = useSelector(store => store.joyid_account);
 
     const onConnect = async() =>{
@@ -81,7 +80,7 @@ export default function Joyid (){
                 <img src={JoyidImg} alt="" />
             </ImgBox>
             <TitBox>JoyID</TitBox>
-            <Btn onClick={() => onConnect()} disabled={!account}>Connect JoyID</Btn>
+            <Btn onClick={() => onConnect()}>Connect JoyID</Btn>
         </>
         }
         {
