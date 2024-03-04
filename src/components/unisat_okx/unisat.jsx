@@ -1,6 +1,9 @@
+import UnisatImg from "../../assets/unisat.png";
 import {useEffect, useRef, useState} from "react";
+import store from "../../store";
+import {saveAccount, saveType} from "../../store/reducer.js";
 
-export default function Unisat(){
+export default function Unisat({handleClose}){
 
     const [disable,setdisable] = useState(false);
     const {unisat} = window;
@@ -22,46 +25,31 @@ export default function Unisat(){
             };
         }
         checkUnisat().then();
-        // getUnisatNet();
     }, []);
 
-    // const getUnisatNet = async() =>{
-    //     try {
-    //         let res = await unisat.getNetwork();
-    //         console.log(res)
-    //     } catch (e) {
-    //         console.log("network",e);
-    //     }
-    // }
 
     const connect = async() =>{
         if(disable)return;
         const result = await unisat.requestAccounts();
         self.accounts = result;
-
         if (result.length > 0) {
-            // store.dispatch(saveAccount(result[0]));
-            console.log(result[0])
-
+            store.dispatch(saveAccount(result[0]));
+            store.dispatch(saveType("Unisat"));
         }
-
+        handleClose()
     }
 
     const handleAccountsChanged = () => {
-
         disconnect()
-        // self.accounts = _accounts;
-        // if (_accounts.length > 0) {
-        //     store.dispatch(saveAccount(_accounts[0]));
-        // }
     };
 
     const disconnect = () =>{
-        // store.dispatch(saveAccount(null));
+        store.dispatch(saveAccount(null));
+        store.dispatch(saveType(null));
     }
 
     return <li onClick={()=>connect()} className={disable?"op":""}>
-        <img src="unisat.png" alt=""/>
+        <img src={UnisatImg} alt=""/>
         <div className="rht">
             Unisat
         </div>

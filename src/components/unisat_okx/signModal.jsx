@@ -1,4 +1,7 @@
 import styled from "styled-components";
+import CloseImg from "../../assets/close.png";
+import SignIcon from "../../assets/signIcon.png";
+import CopyImg from "../../assets/copy.png";
 
 const Mask = styled.div`
     background: rgba(0,0,0,0.5);
@@ -117,10 +120,10 @@ export default function SignModal(){
     return <Mask>
         <ModalBg>
             <CloseBox>
-                <img src="close.png" alt=""/>
+                <img src={CloseImg} alt=""/>
             </CloseBox>
             <TitleInfo>
-                <img src="signIcon.png" alt=""/>
+                <img src={SignIcon} alt=""/>
                 <span>Signature Info</span>
             </TitleInfo>
 
@@ -128,7 +131,7 @@ export default function SignModal(){
                 <TitleBox>Message</TitleBox>
                 <FlexLine>
                     <div className="copyCode">e3qrwB8buu</div>
-                    <img src="copy.png" alt=""/>
+                    <img src={CopyImg} alt=""/>
                 </FlexLine>
                 <Tips>The message will be signed with magic bytes “Nervos Message”</Tips>
             </FlexBox>

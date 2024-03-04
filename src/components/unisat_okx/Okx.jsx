@@ -1,6 +1,9 @@
+import OkxImg from "../../assets/okx.png";
 import {useEffect, useRef, useState} from "react";
+import store from "../../store";
+import {saveAccount, saveType} from "../../store/reducer";
 
-export default function Okx(){
+export default function Okx({handleClose}){
 
 
     const [disable,setdisable] = useState(false);
@@ -41,32 +44,26 @@ export default function Okx(){
         if(disable)return;
         const result = await okxwallet.bitcoin.connect();
         self.accounts = result.address;
-
-        console.log(result.address)
-
-        if (result.length > 0) {
-            // store.dispatch(saveAccount(result[0]));
-            console.log(result[0])
-
+        if (result.address) {
+            store.dispatch(saveAccount(result.address));
+            store.dispatch(saveType("OKX"));
         }
+        handleClose()
 
     }
 
     const handleAccountsChanged = () => {
 
         disconnect()
-        // self.accounts = _accounts;
-        // if (_accounts.length > 0) {
-        //     store.dispatch(saveAccount(_accounts[0]));
-        // }
     };
 
     const disconnect = () =>{
-        // store.dispatch(saveAccount(null));
+        store.dispatch(saveAccount(null));
+        store.dispatch(saveType(null));
     }
 
     return <li onClick={()=>connect()}>
-        <img src="okx.png" alt=""/>
+        <img src={OkxImg} alt=""/>
         <div className="rht">
             OKX
         </div>

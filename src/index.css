@@ -88,103 +88,21 @@ body {
   background: #FE609D;
 }
 .xian-1 {
-  height: 26px;
+  height: 50px;
 }
 .xian-2 {
-  height: 134px;
+  height: 150px;
 }
 .xian-3 {
-  height: 130px;
+  height: 140px;
 }
 .xian-4 {
-  height: 134px;
+  height: 150px;
 }
 .xian-5 {
-  height: 90px;
+  height: 150px;
 }
 
-.card-border-top {
-    border-left: 2px dashed #07CEFA;
-    /*border-left-style: dashed;*/
-
-}
-
-.card-border-1 {
-    height: 64px;
-}
-.card-border-2 {
-    height: 176px;
-}
-
-.card-border-3 {
-    height: 134px;
-}
-
-.card-border-bottom {
-    border-left: 2px dashed #E0E2EC;
-    /*border-left-style: dashed;*/
-}
-.card-border-round {
-    height: 24px;
-    width: 24px;
-    border-radius: 12px;
-    border: 2px solid #E0E2EC;
-}
-
-.card-card {
-    border: 2px solid #E0E2EC;
-    padding: 16px 80px;
-    margin-bottom: 20px;
-}
-.neuron-title {
-    font-family: NeverMind Rounded;
-    font-size: 20px;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: 0px;
-    text-align: left;
-
-}
-.neuron-address {
-    font-family: NeverMind Rounded;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: 0px;
-    text-align: left;
-    color: #131313;
-    border: 1px solid #E0E2EC;
-    border-radius: 8px;
-    padding: 8px 0;
-    margin-top: 16px;
-}
-.neuron-icon {
-    width: 48px;
-}
-.neuron-claim-text {
-    font-family: NeverMind Rounded;
-    font-size: 14px;
-    line-height: 17px;
-    letter-spacing: 0px;
-    color: #727778;
-    margin-top: 16px;
-}
-.neuron-claim-nft-num {
-    color: #131313;
-    margin: 0 4px;
-}
-.neuron-input {
-    align-items: center;
-    /*justify-content: flex-end;*/
-    justify-content: space-between;
-    width: 212px;
-}
-.neuron-input-svg {
-    margin-right: 8px;
-}
-.neuron-input-left {
-    width: 20px;
-}
 .qiu {
   width: 24px;
   height: 24px;
@@ -226,102 +144,4 @@ body {
 .bottom-card-img {
   width: 96px;
   height: 96px;
-}
-
-.popup-title {
-    font-family: National Park ;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: 0px;
-    text-align: left;
-    color: #131313;
-    margin-left: 4px;
-}
-
-.popup-msg {
-    font-family: National Park ;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #131313;
-  margin-top: 20px;
-
-}
-
-.popup-key {
-  font-family: National Park ;
-  font-size: 48px;
-  font-weight: 700;
-  line-height: 57px;
-  letter-spacing: 0em;
-  text-align: center;
-  color: #131313;
-
-}
-
-.popup-desc {
-    font-family: National Park ;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #727778;
-    margin-top: 20px;
-}
-
-.popup-sign {
-    font-family: National Park ;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #131313;
-    margin-top: 40px;
-}
-
-.popup-button {
-    background: linear-gradient(180deg, #07CEFA 0%, #0794FA 100%);
-border-radius: 12px!important;
-    text-align: center!important;
-    margin-top: 40px!important;
-    text-transform:none!important;
-}
-
-.joyid-button {
-    border-radius: 12px!important;
-    text-align: center!important;
-    margin-top: 10px!important;
-    background: #D2FF00!important;
-    color: #131313!important;
-    font-weight: bold!important;
-    width: 200px!important;
-    text-transform:none!important;
-}
-
-.card-main {
-    gap: 20px;
-}
-
-.Claim-button {
-    border-radius: 12px!important;
-    text-align: center!important;
-    margin-top: 10px!important;
-    background: #CCCCCC!important;
-    color: #FFFFFF!important;
-    font-weight: bold!important;
-    width: 380px!important;
-    text-transform:none!important;
-}
-
-.min-w-150 {
-    min-width: 600px;
-}
-
-.w-15 {
-    width: 60px;
 }
