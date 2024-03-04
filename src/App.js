@@ -16,23 +16,22 @@ initConfig({
 });
 
 function App() {
-  return (
-      <PersistGate loading={null} persistor={persistor} >
-          <Provider store={store}>
+    return (
+        <PersistGate loading={null} persistor={persistor} >
+            <Provider store={store}>
                 <div>
 
-                  <div className="border-2 border-blue-500 bg-no-repeat bg-center h-[60rem]" style={{
-                   backgroundImage: 'url(/bg1.png)',
-                   marginTop: 20}}>
-                    <Navbar />
-                    <Hero />
-                  </div>
-                  <Schedule />
-                  <Footer />
+                    <div className=" bg-no-repeat bg-center h-[60rem]" style={{
+                        backgroundImage: 'url(/bg1.png)'}}>
+                        <Navbar />
+                        <Hero />
+                    </div>
+                    <Schedule />
+                    <Footer />
                 </div>
-          </Provider>
-      </PersistGate>
-  );
+            </Provider>
+        </PersistGate>
+    );
 }
 
 export default App;

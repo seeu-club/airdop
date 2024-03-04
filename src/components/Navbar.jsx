@@ -2,11 +2,11 @@ import React from 'react'
 
 const Navbar = () => {
     return (
-        <div className="w-full flex justify-center items-center mt-5 ">
+        <div className="w-full flex justify-center items-center pt-5 ">
             <div className="w-[24rem] md:w-[48rem] lg:w-[64rem] h-15 flex  items-center ">
      
                 <button type="button" className="Navbar-icon-btn text-white bg-white-600 focus:ring-4 focus:outline-none rounded-lg p-2.5 text-center inline-flex items-center  ">
-                    <img src="/logo-small.png" alt="buttonpng" border="0" width={60} height={60}  />
+                    <img className="w-15" src="/logo.png" alt="buttonpng"  />
                 </button>
                 
                 <div className="text-[#131314] font-bold	text-2xl	 p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
