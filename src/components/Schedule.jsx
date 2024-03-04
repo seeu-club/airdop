@@ -2,22 +2,22 @@ import React from 'react'
 
 const Schedule = () => {
   return (
-    <div className="flex flex-col items-center pt-24 border-2 border-blue-500 bg-no-repeat bg-center h-[60rem] bg-[#00164D]" style={{}} >
+    <div className="flex flex-col items-center pt-20 border-2 border-blue-500 bg-no-repeat bg-center h-[60rem] bg-[#00164D]" style={{}} >
       <div className="title-font-style">
         Mint Schedule
       </div>
         <div className="flex max-w-6xl mt-12">
             <div className="columns-sm">
-                <div className="text-right middle-text-style mt-12">
+                <div className="text-right middle-text-style mt-6">
                     Mint
                 </div>
-                <div className="text-right middle-text-style mt-36  middle-right-title-style-hover">
+                <div className="text-right middle-text-style mt-32  middle-right-title-style-hover">
                     Raffle and Airdrop
                 </div>
-                <div className="text-right middle-text-style mt-28 md:mt-36 lg:mt-36 no-select-font">
+                <div className="text-right middle-text-style mt-24 md:mt-32 lg:mt-32 no-select-font">
                     Refund
                 </div>
-                <div className="text-right middle-text-style mt-36 no-select-font">
+                <div className="text-right middle-text-style mt-32 no-select-font">
                     Thanks
                 </div>
             </div>
@@ -45,7 +45,7 @@ const Schedule = () => {
             </div>
             <div className="columns-sm text-left">
                 <div className=" flex flex-col">
-                    <div className="middle-right-main  mt-12 mb-2">
+                    <div className="middle-right-main  mt-6 mb-2">
                         <div className="middle-right-title-style">
                             Feb 1,8 PM - Feb 3, 8 PM (UTC+8)
                         </div>
@@ -53,7 +53,7 @@ const Schedule = () => {
                             From the first orders, I did only “stage” and “date” elements at the Roadmap as at many examples before.
                         </div>
                     </div>
-                    <div className="middle-right-main mt-8 md:mt-24 lg:mt-24">
+                    <div className="middle-right-main mt-8 md:mt-20 lg:mt-20">
                         <div className="middle-right-title-style middle-right-title-style-hover">
                             Feb 1,8 PM - Feb 3, 8 PM (UTC+8)
                         </div>
@@ -61,7 +61,7 @@ const Schedule = () => {
                             Especially for them, I decided to show you version often used in my practice. And what solutions have you found in such moments?
                         </div>
                     </div>
-                    <div className="middle-right-main mt-8 md:mt-20 lg:mt-20 md:mb-2 lg:mb-2">
+                    <div className="middle-right-main mt-8 md:mt-16 lg:mt-16 md:mb-2 lg:mb-2">
                         <div className="middle-right-title-style no-select-font">
                             Feb 1,8 PM - Feb 3, 8 PM (UTC+8)
                         </div>
@@ -69,7 +69,7 @@ const Schedule = () => {
                             i hope you liked. get any feedback to me about this present.
                         </div>
                     </div>
-                    <div className="middle-right-main mt-20 md:mt-24 lg:mt-24">
+                    <div className="middle-right-main mt-16 md:mt-20 lg:mt-20">
                         <div className="middle-right-title-style no-select-font">
                             Feb 1,8 PM - Feb 3, 8 PM (UTC+8)
                         </div>

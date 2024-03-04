@@ -1,11 +1,8 @@
 import styled from "styled-components";
-import UnisatImg from "../../assets/unisat.png";
-import OkxImg from "../../assets/okx.png";
 import {useEffect, useRef, useState} from "react";
 import Modal from "./modal";
 import SignModal from "./signModal";
-import {useSelector} from "react-redux";
-import AfterAddress from "./afterAddress";
+
 
 
 const Box = styled.div`
@@ -14,11 +11,6 @@ const Box = styled.div`
     width: 100%;
     box-sizing: border-box;
     border-radius: 16px;
-    height: 191px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
 `
 const ImgBox = styled.div`
     display: flex;
@@ -62,12 +54,13 @@ const Btn = styled.div`
     cursor: pointer;
 `
 
-
-
 export default function Unisat_okx (){
-    const account = useSelector(store => store.account);
-    const type = useSelector(store => store.type);
+
     const [show,setShow] = useState(false)
+
+
+
+
 
 
     const handleShow = () =>{
@@ -79,25 +72,16 @@ export default function Unisat_okx (){
 
     return <Box>
         {
-            show && <Modal handleClose={handleClose}/>
+            show &&  <Modal handleClose={handleClose} />
         }
 
         {/*<SignModal />*/}
-        {
-            !account &&
-            <>
-                <ImgBox>
-                    <img src={OkxImg} alt="" className="lft"/>
-                    <img src={UnisatImg} alt="" className="rht"/>
-                </ImgBox>
-                <TitBox>Connect</TitBox>
-                <Btn onClick={() => handleShow()}>Connect Btc Wallet</Btn>
-            </>
-        }
-        {
-            !!account &&  <AfterAddress />
-        }
+        <ImgBox>
+            <img src="okx.png" alt="" className="lft"/>
+            <img src="unisat.png" alt="" className="rht" />
+        </ImgBox>
+        <TitBox>Connect</TitBox>
+        <Btn  onClick={() => handleShow()}>Connect Btc Wallet</Btn>
 
-
-    </Box>;
+    </Box>
 }

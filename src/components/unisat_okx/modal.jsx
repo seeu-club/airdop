@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import UnisatImg from "../../assets/unisat.png";
-import OkxImg from "../../assets/okx.png";
-import CloseImg from "../../assets/close.png";
 import UnisatBox from "./unisat";
 import  OkxBox from "./Okx";
 
@@ -79,12 +76,12 @@ export default function Modal({handleClose}){
     return <Mask>
         <ModalBg>
             <CloseBox onClick={()=>handleClose()}>
-                <img src={CloseImg} alt=""/>
+                <img src="close.png" alt=""/>
             </CloseBox>
             <TitleBox>Choose Wallet</TitleBox>
             <UlBox>
-                <OkxBox handleClose={handleClose} />
-                <UnisatBox handleClose={handleClose} />
+                <OkxBox />
+                <UnisatBox />
 
             </UlBox>
         </ModalBg>

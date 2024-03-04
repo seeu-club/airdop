@@ -74,7 +74,7 @@ const Hero = () => {
               </p>
             </div> */}
             {
-                <Countdown date={Date.now() + 3611000} renderer={renderer} />
+                <Countdown zeroPadDays={2} zeroPadTime={2} date={Date.now() + 3611000} renderer={renderer} />
             }
 
 
