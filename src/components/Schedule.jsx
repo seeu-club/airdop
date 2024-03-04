@@ -2,7 +2,7 @@ import React from 'react'
 
 const Schedule = () => {
   return (
-    <div className="flex flex-col items-center pt-20 border-2 border-blue-500 bg-no-repeat bg-center h-[60rem] bg-[#00164D]" style={{}} >
+    <div className="flex flex-col items-center pt-20 bg-no-repeat bg-center h-[60rem] bg-[#00164D]" >
       <div className="title-font-style">
         Mint Schedule
       </div>

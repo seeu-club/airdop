@@ -21,9 +21,8 @@ function App() {
           <Provider store={store}>
                 <div>
 
-                  <div className="border-2 border-blue-500 bg-no-repeat bg-center h-[60rem]" style={{
-                   backgroundImage: 'url(/bg1.png)',
-                   marginTop: 20}}>
+                  <div className="bg-no-repeat bg-center h-[60rem]" style={{
+                   backgroundImage: 'url(/bg1.png)',backgroundSize:'100% 100%'}}>
                     <Navbar />
                     <Hero />
                   </div>

@@ -9,7 +9,7 @@ const Footer = () => {
     // }
 
   return (
-    <div className="flex flex-col items-center pt-24 border-2 border-blue-500 bg-no-repeat bg-center h-[60rem] bg-[#C6F0FF]">
+    <div className="flex flex-col items-center pt-24 bg-no-repeat bg-center h-[60rem] bg-[#C6F0FF]">
 
         <div className="max-w-6xl flex ">
             <div className="columns-[33.75rem] bottom-card-left py-6 px-12 rounded-l-3xl">
