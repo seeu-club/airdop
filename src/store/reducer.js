@@ -17,6 +17,9 @@ const mainSlice = createSlice({
         saveJoyid(state, action) {
             state.joyid_account = action.payload;
         },
+        savePopup(state, action) {
+            state.popup = action.payload;
+        },
         saveSignature(state, action) {
             state.signature = action.payload;
         },
@@ -30,6 +33,7 @@ export const {
     saveAccount,
     saveType,
     saveJoyid,
+    savePopup,
     saveSignature,
     saveShowSign,
     saveLoading
