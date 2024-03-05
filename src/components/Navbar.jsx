@@ -9,7 +9,7 @@ const Navbar = () => {
                     <img className="w-15" src="/logo.png" alt="buttonpng"  />
                 </button>
 
-                <div className="text-[#131314] font-bold	text-2xl	 p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <div className="text-[#131314] font-bold	text-2xl	 p-2.5 text-center inline-flex items-center me-2">
                     SeeU
                 </div>
 
