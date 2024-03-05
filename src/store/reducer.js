@@ -20,6 +20,9 @@ const mainSlice = createSlice({
         savePopup(state, action) {
             state.popup = action.payload;
         },
+        saveJoyidSignature(state, action) {
+            state.joyid_signature = action.payload;
+        },
         saveSignature(state, action) {
             state.signature = action.payload;
         },
@@ -34,6 +37,7 @@ export const {
     saveType,
     saveJoyid,
     savePopup,
+    saveJoyidSignature,
     saveSignature,
     saveShowSign,
     saveLoading

@@ -136,6 +136,9 @@ body {
   padding: 16px 80px;
   margin-bottom: 20px;
 }
+.card-joyid {
+  padding: 10px 80px;
+}
 .neuron-title {
   font-family: NeverMind Rounded;
   font-size: 20px;
