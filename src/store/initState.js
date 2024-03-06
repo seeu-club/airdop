@@ -4,7 +4,10 @@ export default {
   type: null,
   joyid_account:null,
   popup: false,
-  joyid_signature: false,
+  joyid_sign_msg: '',
+  neuron_signature:'',
+  neuron_address:'',
+  neuron_claim_num:0,
   signature:null,
   showSign:null
 

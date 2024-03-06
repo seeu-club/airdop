@@ -125,7 +125,7 @@ export default function SignModal(){
     const account = useSelector(store => store.account);
     const type = useSelector(store => store.type);
     const signature = useSelector(store => store.signature)
-    const joyid_signature = useSelector(store => store.joyid_signature)
+    const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
     const [msg,setMsg] = useState();
     const [input,setInput] = useState("")
 
@@ -133,7 +133,7 @@ export default function SignModal(){
     useEffect(() => {
         //ToDO:需要調用接口獲取message
         setTimeout(()=>{
-            setMsg(joyid_signature)
+            setMsg(joyid_sign_msg)
         },500)
     }, []);
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import JoyidImg from "../../assets/joyid.png";
 import { connect } from '@joyid/ckb';
 import store from "../../store";
-import {saveAccount, saveJoyid, saveJoyidSignature, saveType} from "../../store/reducer";
+import {saveAccount, saveJoyid, saveJoyidSignMsg, saveType} from "../../store/reducer";
 import {useSelector} from "react-redux";
 import JoyidAddress from "../unisat_okx/JoyidAddress";
 import { addressToScript } from "@nervosnetwork/ckb-sdk-utils";
@@ -66,7 +66,7 @@ export default function Joyid (){
         try {
             const authData = await connect();
             store.dispatch(saveJoyid(authData.address));
-            store.dispatch(saveJoyidSignature(addressToScript(authData.address)));
+            store.dispatch(saveJoyidSignMsg(JSON.stringify(addressToScript(authData.address))));
 
         } catch (error) {
             console.error(error);

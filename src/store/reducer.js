@@ -20,8 +20,17 @@ const mainSlice = createSlice({
         savePopup(state, action) {
             state.popup = action.payload;
         },
-        saveJoyidSignature(state, action) {
-            state.joyid_signature = action.payload;
+        saveJoyidSignMsg(state, action) {
+            state.joyid_sign_msg = action.payload;
+        },
+        saveNeuronSignature(state, action) {
+            state.neuron_signature = action.payload;
+        },
+        saveNeuronAddress(state, action) {
+            state.neuron_address = action.payload;
+        },
+        saveNeuronClaimNum(state, action) {
+            state.neuron_claim_num = action.payload;
         },
         saveSignature(state, action) {
             state.signature = action.payload;
@@ -37,7 +46,10 @@ export const {
     saveType,
     saveJoyid,
     savePopup,
-    saveJoyidSignature,
+    saveJoyidSignMsg,
+    saveNeuronSignature,
+    saveNeuronAddress,
+    saveNeuronClaimNum,
     saveSignature,
     saveShowSign,
     saveLoading
