@@ -67,10 +67,11 @@ const FlexLine = styled.div`
         color: #131313;
         text-align: center;
         font-family: 'NationalPark';
-        font-size: 48px;
+        word-break:break-all;
         font-style: normal;
         font-weight: 700;
         line-height: normal;
+        max-width:400px;
     }
     img{
         margin-top: 10px;
@@ -132,10 +133,8 @@ export default function SignModal(){
     const {unisat,okxwallet} = window;
     useEffect(() => {
         //ToDO:需要調用接口獲取message
-        setTimeout(()=>{
-            setMsg(joyid_sign_msg)
-        },500)
-    }, []);
+        setMsg(joyid_sign_msg);
+    }, [joyid_sign_msg]);
 
     useEffect(() => {
         if(!msg)return;

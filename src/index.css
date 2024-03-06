@@ -256,13 +256,18 @@ body {
 
 .popup-key {
   font-family: National Park ;
-  font-size: 48px;
+  /*font-size: 48px;*/
   font-weight: 700;
-  line-height: 57px;
+  /*line-height: 57px;*/
   letter-spacing: 0em;
   text-align: center;
   color: #131313;
 
+}
+
+.popup-sign-msg {
+  max-width: 400px;
+  word-break:break-all;
 }
 
 .popup-desc {

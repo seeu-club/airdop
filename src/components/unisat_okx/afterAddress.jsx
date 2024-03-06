@@ -6,7 +6,8 @@ import {shortAddress} from "../../utils/global";
 import JoyidImg from "../../assets/joyid.png";
 import DisconnectImg from "../../assets/disconnect.png";
 import store from "../../store";
-import {saveAccount, saveJoyid, saveShowSign, saveType} from "../../store/reducer";
+import {getClaimNum, saveAccount, saveJoyid, saveShowSign, saveType} from "../../store/reducer";
+import React, {useEffect} from "react";
 
 const AfterBox = styled.div`
     display: flex;
@@ -50,6 +51,7 @@ const TitBox = styled.div`
 
 export default function AfterAddress(){
     const account = useSelector(store => store.account);
+    const claimNum = useSelector(store => store.seeu_claim_num);
     const type = useSelector(store => store.type);
 
     const returnImg = () =>{
@@ -67,6 +69,13 @@ export default function AfterAddress(){
         store.dispatch(saveShowSign(null));
     }
 
+    useEffect(() => {
+        store.dispatch(getClaimNum({
+            type: 'ethereum',
+            address: account,
+        }));
+    }, [account]);
+
     return <AfterBox>
         <div>
             <img src={returnImg()} alt="" className="logo"/>
@@ -75,6 +84,14 @@ export default function AfterAddress(){
         <AddressBox>
             <span>{shortAddress(account)}</span>
             <img src={DisconnectImg} alt="" className="disconnect" onClick={()=>Disconnect()}/>
+
         </AddressBox>
+        <div className="neuron-claim-text">
+            You can claim
+            <span className="font-bold neuron-claim-nft-num">
+                {claimNum}
+                                        </span>
+            NFTs.
+        </div>
     </AfterBox>
 }

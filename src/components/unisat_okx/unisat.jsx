@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import store from "../../store";
-import {saveAccount, saveShowSign, saveType} from "../../store/reducer.js";
+import {getClaimNum, saveAccount, saveShowSign, saveType} from "../../store/reducer.js";
 
 import UnisatImg from "../../assets/unisat.png";
 

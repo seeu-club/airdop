@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import store from "../../store";
-import {saveAccount, saveShowSign, saveType} from "../../store/reducer";
+import {getClaimNum, saveAccount, saveShowSign, saveType} from "../../store/reducer";
 
 import OkxImg from "../../assets/okx.png";
 

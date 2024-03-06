@@ -2,7 +2,15 @@ import React, {useState,useEffect} from "react";
 import {useSelector} from "react-redux";
 import {connect, PopupConifg} from "@joyid/ckb";
 import store from "../store";
-import {saveJoyid, saveJoyidSignMsg, saveNeuronAddress, saveNeuronClaimNum, savePopup} from "../store/reducer";
+import {
+    getClaimNum,
+    saveJoyid,
+    saveJoyidSignMsg,
+    saveNeuronAddress,
+    saveNeuronClaimNum,
+    saveNeuronSignature,
+    savePopup
+} from "../store/reducer";
 import JoyidAddress from "./unisat_okx/JoyidAddress";
 import styled from "styled-components";
 import Button from "@mui/material/Button";
@@ -33,7 +41,6 @@ const Btn = styled.button`
 
 export default function Neuron(){
 
-    const [claimNum, setClaimNum] = useState(0);
     const [showPopup, setShowPopup] = useState(false);
     const handleClick = () => {
         // store.dispatch(savePopup(true));
@@ -45,7 +52,7 @@ export default function Neuron(){
     };
     const joyid_account = useSelector(store => store.joyid_account);
     const neuronAddress = useSelector(store => store.neuron_address);
-    const neuronClaimNum = useSelector(store => store.neuron_claim_num);
+    const neuronClaimNum = useSelector(store => store.ckb_claim_num);
     const { address: account } = useAccount();
     const onConnect = async() =>{
         try {
@@ -59,27 +66,23 @@ export default function Neuron(){
 
     const DisconnectNeuron = () => {
         store.dispatch(saveNeuronAddress(''));
+        store.dispatch(saveNeuronSignature(''));
         store.dispatch(saveNeuronClaimNum(0));
     }
 
     useEffect(() => {
-        const myHeaders = new Headers();
-        myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
-        const requestOptions = {
-            method: 'GET',
-            headers: myHeaders,
-            redirect: 'follow'
-        };
-        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claimed/ethereum/0x82471774a29102c885e6370d722b9b4c820c2780", requestOptions)
-            .then(response => response.text())
-            .then(result => {
-                const res = JSON.parse(result);
-                if (res && res.data) {
-                    setClaimNum(res.data.total - res.data.claimed);
-                }
-            })
-            .catch(error => console.log('error', error));
+        store.dispatch(getClaimNum({
+            type: 'ethereum',
+            address: account,
+        }));
         }, [account]);
+    useEffect(() => {
+        store.dispatch(getClaimNum({
+            type: 'ckb',
+            address: neuronAddress,
+        }));
+    }, [neuronAddress]);
+
 
     function getSign() {
         const signMsg = Sign(account,'account').then(res => {
@@ -196,7 +199,7 @@ export default function Neuron(){
                                     <div className="neuron-claim-text">
                                         You can claim
                                         <span className="font-bold neuron-claim-nft-num">
-                                            {claimNum}
+                                            {neuronClaimNum}
                                     </span>
                                         NFTs.
                                     </div>
@@ -213,7 +216,7 @@ export default function Neuron(){
                                 Connect
                             </div>
                             <div className="flex connect-main">
-                                <Btn onClick={handleClick} className="connect-neuron-button" >
+                                <Btn onClick={handleClick} className="connect-neuron-button"  disabled={!joyid_account}>
                                     <img src="neuron.png" alt=""/>
                                     <div>Neuron</div>
                                 </Btn>

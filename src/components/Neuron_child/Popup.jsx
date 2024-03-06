@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import OutlinedInput from '@mui/material/OutlinedInput';
 import {useSelector} from "react-redux";
 import store from "../../store";
-import {saveNeuronAddress, saveNeuronClaimNum, saveNeuronSignature, savePopup} from "../../store/reducer";
+import {getClaimNum, saveNeuronAddress, saveNeuronClaimNum, saveNeuronSignature, savePopup} from "../../store/reducer";
 import {shortAddress} from "../../utils/global";
 
 
@@ -13,32 +13,12 @@ import {shortAddress} from "../../utils/global";
 export default function Popup(props){
     const {showPopup,close} = props;
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg);
-    console.log(typeof joyid_sign_msg,joyid_sign_msg);
     const neuron_signature = useSelector(store => store.neuron_signature);
     const neuron_address = useSelector(store => store.neuron_address);
     const handleClick = () => {
-        if (neuron_signature) {
-            store.dispatch(saveNeuronSignature(neuron_signature));
-            const myHeaders = new Headers();
-            myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
-            const requestOptions = {
-                method: 'GET',
-                headers: myHeaders,
-                redirect: 'follow'
-            };
-            fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claimed/ethereum/0x82471774a29102c885e6370d722b9b4c820c2780", requestOptions)
-                .then(response => response.text())
-                .then(result => {
-                    const res = JSON.parse(result);
-                    if (res && res.data) {
-                        store.dispatch(saveNeuronAddress('1'));
-                        store.dispatch(saveNeuronClaimNum(2));
-                    }
-                })
-                .catch(error => console.log('error', error))
-                .finally(()=>handleClose());
+        if (neuron_signature && neuron_address) {
+            handleClose();
         }
-
     };
 
     const handleClose = () => {
@@ -85,8 +65,8 @@ export default function Popup(props){
                             Message
                         </div>
                         <div className="popup-key flex justify-center items-center">
-                            <div>
-                                {shortAddress(joyid_sign_msg)}
+                            <div className="popup-sign-msg">
+                                {joyid_sign_msg}
                             </div>
                             <div onClick={handleCopy} className=" ml-4 cursor-pointer">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -110,9 +90,9 @@ export default function Popup(props){
                         <div>
                         <div>
                             <OutlinedInput
-                                size="small"
                                 fullWidth
                                 value={neuron_signature}
+                                onChange={event => store.dispatch(saveNeuronSignature(event.target.value))}
                                 placeholder={'Signature'}
                                 id="component-outlined"
                             />
@@ -127,6 +107,7 @@ export default function Popup(props){
                                     fullWidth
                                     size="small"
                                     value={neuron_address}
+                                    onChange={event => store.dispatch(saveNeuronAddress(event.target.value))}
                                     placeholder={'Account'}
                                     id="component-outlined"
                                 />

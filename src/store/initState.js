@@ -7,7 +7,8 @@ export default {
   joyid_sign_msg: '',
   neuron_signature:'',
   neuron_address:'',
-  neuron_claim_num:0,
+  ckb_claim_num:0,
+  seeu_claim_num:0,
   signature:null,
   showSign:null
 
