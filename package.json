@@ -3,21 +3,27 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@joyid/ckb": "^0.0.4",
-    "@reduxjs/toolkit": "^2.2.1",
+    "@ckb-lumos/helpers": "^0.21.1",
+    "@ckb-lumos/rpc": "^0.21.1",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@joyid/ckb": "^0.0.4",
     "@mui/material": "^5.15.11",
+    "@nervosnetwork/ckb-sdk-core": "^0.109.0",
+    "@reduxjs/toolkit": "^2.2.1",
+    "@spore-sdk/core": "^0.1.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "crypto-browserify": "^3.12.0",
+    "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
-    "redux-persist": "^6.0.0",
-    "react-scripts": "5.0.1",
-    "styled-components": "^6.1.8",
     "react-redux": "^9.1.0",
+    "react-scripts": "5.0.1",
+    "redux-persist": "^6.0.0",
+    "styled-components": "^6.1.8",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
@@ -49,4 +55,5 @@
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1"
   }
+ 
 }
