@@ -71,7 +71,7 @@ export default function AfterAddress(){
 
     useEffect(() => {
         store.dispatch(getClaimNum({
-            type: 'ethereum',
+            type: 'bitcoin',
             address: account,
         }));
     }, [account]);
