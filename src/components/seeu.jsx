@@ -103,6 +103,7 @@ const LftBox = styled.div`
 
 export default function Seeu(){
     const account = useSelector(store => store.account);
+    const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
     const type = useSelector(store => store.type);
     const joyid_account = useSelector(store => store.joyid_account);
     const signature = useSelector(store => store.signature);
@@ -117,6 +118,30 @@ export default function Seeu(){
 
 
     }, [account,signature]);
+
+    function Claim() {
+        var myHeaders = new Headers();
+        myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+            "message": JSON.parse(joyid_sign_msg),
+            "pubkey": account,
+            "signature": signature
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/bitcoin", requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(123,result))
+            .catch(error => console.log('error123', error));
+    }
 
     return <>
         {
@@ -143,7 +168,7 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox disabled={!account || !joyid_account}>Claim</ButtonBox>
+            <ButtonBox onClick={Claim} disabled={!account || !joyid_account}>Claim</ButtonBox>
 
         </UlBox>
 

@@ -184,6 +184,7 @@ body {
 }
 .neuron-input-svg {
   margin-right: 8px;
+  cursor: pointer;
 }
 .neuron-input-left {
   width: 20px;
