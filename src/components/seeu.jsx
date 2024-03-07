@@ -7,6 +7,7 @@ import {useSelector} from "react-redux";
 import SignModal from "./unisat_okx/signModal";
 import store from "../store";
 import {saveJoyid, saveShowSign} from "../store/reducer";
+import ClaimPopup from "./Neuron_child/ClaimPopup";
 
 const Box = styled.div`
     margin-top: 24px;
@@ -108,7 +109,11 @@ export default function Seeu(){
     const joyid_account = useSelector(store => store.joyid_account);
     const signature = useSelector(store => store.signature);
     const showSign = useSelector(store => store.showSign);
-
+    const [showClaimPopup, setShowClaimPopup] = useState(false);
+    const handleCloseClaim = () => {
+        // store.dispatch(savePopup(true));
+        setShowClaimPopup(false);
+    };
 
     useEffect(() => {
         console.log("====",!account,showSign === false)
@@ -120,33 +125,38 @@ export default function Seeu(){
     }, [account,signature]);
 
     function Claim() {
-        var myHeaders = new Headers();
-        myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
-        myHeaders.append("Content-Type", "application/json");
+        // var myHeaders = new Headers();
+        // myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
+        // myHeaders.append("Content-Type", "application/json");
+        //
+        // var raw = JSON.stringify({
+        //     "message": JSON.parse(joyid_sign_msg),
+        //     "pubkey": account,
+        //     "signature": signature
+        // });
+        //
+        // var requestOptions = {
+        //     method: 'POST',
+        //     headers: myHeaders,
+        //     body: raw,
+        //     redirect: 'follow'
+        // };
+        //
+        // fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/bitcoin", requestOptions)
+        //     .then(response => response.text())
+        //     .then(result => console.log(123,result))
+        //     .catch(error => console.log('error123', error));
 
-        var raw = JSON.stringify({
-            "message": JSON.parse(joyid_sign_msg),
-            "pubkey": account,
-            "signature": signature
-        });
+        setShowClaimPopup(true);
 
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
 
-        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/bitcoin", requestOptions)
-            .then(response => response.text())
-            .then(result => console.log(123,result))
-            .catch(error => console.log('error123', error));
     }
 
     return <>
         {
             showSign && <SignModal />
         }
+        <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
         <Box>
         <LftBox>
             <div className={!!joyid_account ? "li first active" : "li first"}>

@@ -19,6 +19,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import {useAccount,useWalletClient} from "wagmi";
 import {shortAddress} from "../utils/global";
 import { addressToScript } from "@nervosnetwork/ckb-sdk-utils";
+import ClaimPopup from "./Neuron_child/ClaimPopup";
 
 
 const Btn = styled.button`
@@ -42,6 +43,7 @@ const Btn = styled.button`
 export default function Neuron(){
 
     const [showPopup, setShowPopup] = useState(false);
+    const [showClaimPopup, setShowClaimPopup] = useState(false);
     const handleClick = () => {
         // store.dispatch(savePopup(true));
         setShowPopup(true);
@@ -49,6 +51,10 @@ export default function Neuron(){
     const handleClose = () => {
         // store.dispatch(savePopup(true));
         setShowPopup(false);
+    };
+    const handleCloseClaim = () => {
+        // store.dispatch(savePopup(true));
+        setShowClaimPopup(false);
     };
     const joyid_account = useSelector(store => store.joyid_account);
     const neuronAddress = useSelector(store => store.neuron_address);
@@ -85,9 +91,13 @@ export default function Neuron(){
 
 
     function getSign() {
-        const signMsg = Sign(account,'account').then(res => {
+        if (!account) {
+            return;
+        }
+        const signMsg = Sign(account,JSON.stringify(addressToScript(joyid_account))).then(res => {
             console.log('info',res);
-
+            store.dispatch(saveNeuronSignature(res));
+            setShowClaimPopup(true);
         }).catch(err=>{
             console.log('error',err);
         })
@@ -104,6 +114,7 @@ export default function Neuron(){
     return <>
         <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
             <Popup showPopup={showPopup} close={handleClose} />
+            <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
 
             <div className="flex card-main">
                 <div className="flex  flex-col  items-center">
@@ -184,7 +195,7 @@ export default function Neuron(){
                                     <div >
                                         <img className="neuron-icon" src="eth.png" alt=""/>
                                     </div>
-                                    <div className="neuron-title" onClick={getSign}>
+                                    <div className="neuron-title">
                                         Ethereum
                                     </div>
                                     <div className="flex neuron-address neuron-input">
@@ -256,8 +267,6 @@ export default function Neuron(){
                                     {({
                                           account,
                                           chain,
-                                          openAccountModal,
-                                          openChainModal,
                                           openConnectModal,
                                           authenticationStatus,
                                           mounted,
@@ -301,7 +310,7 @@ export default function Neuron(){
                         </>)}
                     </div>
                     <div>
-                        <Button className="Claim-button" variant="contained">
+                        <Button onClick={getSign} disabled={!joyid_account || (!account && !neuronAddress)} className={joyid_account && (account || neuronAddress) ? "Claim-button claim-active-button" : "Claim-button"} variant="contained">
                             Claim
                         </Button>
                     </div>
