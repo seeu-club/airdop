@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
-import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 import {shortAddress} from "../../utils/global";
 import { connect, signTransaction } from '@joyid/ckb';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import {  RPC} from "@ckb-lumos/rpc"
 import {useAccount} from "wagmi";
@@ -16,6 +16,7 @@ const rpc = new RPC(CKB_RPC_URL)
 
 export default function ClaimPopup(props){
     const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
+    const [loading, setLoading] = React.useState(false);
     const times = 200;
     const {showPopup,claimType,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
@@ -45,7 +46,7 @@ export default function ClaimPopup(props){
     }
 
     const handleClick = async () => {
-
+        setLoading(true);
         const signedTx = await signTransaction({
             to: toAddress,
             from: joyid_account,
@@ -59,12 +60,33 @@ export default function ClaimPopup(props){
         const hash = await rpc.sendTransaction(signedTx, "passthrough")
         console.log('hash',hash)
         //to yao  rpc验证交易
-        const result = await rpc.getTransaction(hash).then((res)=> {
-            console.log('result',res,hash);
-            Claim(hash).then(re => {
-                handleClose();
+
+        const timeout = setInterval(
+            ()=>{
+                getFlag(hash).then((res)=>{
+                    console.log('getFlag',res);
+                    if (res) {
+                        clearInterval(timeout);
+                        Claim(hash).then(re => {
+                            setLoading(false);
+                            handleClose();
+                        })
+                    }
+                })
+            }
+            ,2000);
+    }
+
+    const getFlag = async (hash)=>{
+            return await rpc.getTransaction(hash).then((res)=> {
+                console.log('result',res.txStatus.status,hash);
+                if (res.txStatus.status === "committed") {
+                    return true;
+                } else {
+                    return false;
+                }
+
             })
-        })
 
     }
 
@@ -74,7 +96,7 @@ export default function ClaimPopup(props){
         myHeaders.append("Content-Type", "application/json");
 
         var raw = JSON.stringify({
-            "message": JSON.parse(joyid_sign_msg),
+            "message": joyid_sign_msg,
             "pubkey": account,
             "signature": signature,
             "txid": hash
@@ -151,9 +173,25 @@ export default function ClaimPopup(props){
                             You can claim <span className="claim-popup-active">{ClaimNum}</span> NFT. You ned pay <span className="claim-popup-active">{amount}</span> CKB for Joy ID
                         </div>
                         <div className="flex justify-center ">
-                            <Button className="claim-popup-button" aria-describedby={id} variant="contained" onClick={handleClick}>
-                                Pay and Claim
-                            </Button>
+                            {/*<Button >*/}
+                            {/*    */}
+                            {/*</Button>*/}
+
+
+                            <LoadingButton
+                                loading={loading}
+                                className={loading ? "claim-popup-button-loading" : "claim-popup-button"}
+                                aria-describedby={id}
+                                onClick={handleClick}
+                                variant="outlined"
+                            >
+                                {loading ? 'loading' : 'Pay and Claim'}
+                            </LoadingButton>
+                            {/*<LoadingButton loading loadingIndicator="Loading…" variant="outlined">*/}
+                            {/*    Fetch data*/}
+                            {/*</LoadingButton>*/}
+
+
                         </div>
                         </Typography>
                 </Popover>
