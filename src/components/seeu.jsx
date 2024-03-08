@@ -8,6 +8,13 @@ import SignModal from "./unisat_okx/signModal";
 import store from "../store";
 import {saveJoyid, saveShowSign} from "../store/reducer";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
+import { connect, signTransaction } from '@joyid/ckb';
+
+import {  RPC} from "@ckb-lumos/rpc"
+
+const CKB_RPC_URL = "https://testnet.ckb.dev/rpc"
+
+const rpc = new RPC(CKB_RPC_URL)
 
 const Box = styled.div`
     margin-top: 24px;
@@ -103,6 +110,9 @@ const LftBox = styled.div`
 `
 
 export default function Seeu(){
+    //to yao  这里是joyid发起转账的代码
+    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
+    const [amount, setAmount] = React.useState('200');
     const account = useSelector(store => store.account);
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
     const type = useSelector(store => store.type);
@@ -152,6 +162,28 @@ export default function Seeu(){
 
     }
 
+
+    const onSign = async () => {
+
+        const signedTx = await signTransaction({
+            to: toAddress,
+            from: joyid_account,
+            amount: BigInt(Number(amount) * 10 ** 8).toString(),
+        }).catch(e => {
+            console.log(e)
+        });
+        // const txHash = await sendTransaction(signedTx);
+        console.log('signedTx', signedTx);
+        //to yao  rpc发起交易
+        const hash = await rpc.sendTransaction(signedTx, "passthrough")
+
+        console.log('hash',hash)
+        //to yao  rpc验证交易
+        const result = await rpc.getTransaction(hash)
+        console.log('result',result)
+    }
+
+
     return <>
         {
             showSign && <SignModal />
@@ -178,7 +210,9 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox onClick={Claim} disabled={!account || !joyid_account}>Claim</ButtonBox>
+            <ButtonBox onClick={() => {
+                onSign()
+            }} disabled={!account || !joyid_account}>Claim</ButtonBox>
 
         </UlBox>
 
