@@ -4,15 +4,21 @@ import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import {useSelector} from "react-redux";
 import {shortAddress} from "../../utils/global";
+import { connect, signTransaction } from '@joyid/ckb';
 
+import {  RPC} from "@ckb-lumos/rpc"
+
+const CKB_RPC_URL = "https://testnet.ckb.dev/rpc"
+
+const rpc = new RPC(CKB_RPC_URL)
 
 
 export default function ClaimPopup(props){
+    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
+    const [amount, setAmount] = React.useState('200');
     const {showPopup,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
-    const handleClick = () => {
-            handleClose();
-    };
+
 
     const handleClose = () => {
         close();
@@ -21,6 +27,29 @@ export default function ClaimPopup(props){
     const handleCopy = () => {
         navigator.clipboard
             .writeText(joyid_account);
+    }
+
+    const handleClick = async () => {
+
+        const signedTx = await signTransaction({
+            to: toAddress,
+            from: joyid_account,
+            amount: BigInt(Number(amount) * 10 ** 8).toString(),
+        }).catch(e => {
+            console.log(e)
+        });
+        // const txHash = await sendTransaction(signedTx);
+        console.log('signedTx', signedTx);
+        //to yao  rpc发起交易
+        const hash = await rpc.sendTransaction(signedTx, "passthrough")
+
+        console.log('hash',hash)
+        //to yao  rpc验证交易
+        const result = await rpc.getTransaction(hash).then((res)=> {
+            console.log('result',res)
+            handleClose();
+        })
+
     }
 
     const open = Boolean(showPopup);

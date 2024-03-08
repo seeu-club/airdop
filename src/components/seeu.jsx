@@ -6,15 +6,8 @@ import SelectedImg from "../assets/selected.png";
 import {useSelector} from "react-redux";
 import SignModal from "./unisat_okx/signModal";
 import store from "../store";
-import {saveJoyid, saveShowSign} from "../store/reducer";
+import {saveJoyid, saveShowSign, saveSignature} from "../store/reducer";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
-import { connect, signTransaction } from '@joyid/ckb';
-
-import {  RPC} from "@ckb-lumos/rpc"
-
-const CKB_RPC_URL = "https://testnet.ckb.dev/rpc"
-
-const rpc = new RPC(CKB_RPC_URL)
 
 const Box = styled.div`
     margin-top: 24px;
@@ -110,11 +103,9 @@ const LftBox = styled.div`
 `
 
 export default function Seeu(){
-    //to yao  这里是joyid发起转账的代码
-    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
-    const [amount, setAmount] = React.useState('200');
     const account = useSelector(store => store.account);
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
+    const [msg,setMsg] = useState();
     const type = useSelector(store => store.type);
     const joyid_account = useSelector(store => store.joyid_account);
     const signature = useSelector(store => store.signature);
@@ -126,15 +117,63 @@ export default function Seeu(){
     };
 
     useEffect(() => {
-        console.log("====",!account,showSign === false)
-        if(!account || showSign === false)return;
-        console.error("=======")
-        store.dispatch(saveShowSign(true));
+        //ToDO:需要調用接口獲取message
+        setMsg(joyid_sign_msg);
+    }, [joyid_sign_msg]);
+
+    useEffect(() => {
+
+    }, [msg]);
+
+    const signMessageInput = () =>{
+        if(!account || !type)return;
+        if(type === "OKX"){
+            OkxSign()
+        }else if(type === "Unisat"){
+            UnisatSign()
+        }
+    }
+
+    const UnisatSign = async() =>{
+        try{
+            const sign = await unisat.signMessage(msg);
+            console.log(sign)
+            store.dispatch(saveSignature(sign));
+            setShowClaimPopup(true);
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
+    const OkxSign = async () =>{
+
+        try{
+            const sign = await okxwallet.bitcoin.signMessage(msg, 'ecdsa').then((res)=>{
+                console.log(res)
+                store.dispatch(saveSignature(res));
+                setShowClaimPopup(true);
+            });
 
 
-    }, [account,signature]);
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
+    // useEffect(() => {
+    //     console.log("====",!account,showSign === false)
+    //     if(!account || showSign === false)return;
+    //     console.error("=======")
+    //     store.dispatch(saveShowSign(true));
+    //
+    //
+    // }, [account,signature]);
 
     function Claim() {
+        if(!msg)return;
+        signMessageInput();
         // var myHeaders = new Headers();
         // myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
         // myHeaders.append("Content-Type", "application/json");
@@ -156,33 +195,7 @@ export default function Seeu(){
         //     .then(response => response.text())
         //     .then(result => console.log(123,result))
         //     .catch(error => console.log('error123', error));
-
-        setShowClaimPopup(true);
-
-
     }
-
-
-    const onSign = async () => {
-
-        const signedTx = await signTransaction({
-            to: toAddress,
-            from: joyid_account,
-            amount: BigInt(Number(amount) * 10 ** 8).toString(),
-        }).catch(e => {
-            console.log(e)
-        });
-        // const txHash = await sendTransaction(signedTx);
-        console.log('signedTx', signedTx);
-        //to yao  rpc发起交易
-        const hash = await rpc.sendTransaction(signedTx, "passthrough")
-
-        console.log('hash',hash)
-        //to yao  rpc验证交易
-        const result = await rpc.getTransaction(hash)
-        console.log('result',result)
-    }
-
 
     return <>
         {
@@ -210,9 +223,7 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox onClick={() => {
-                onSign()
-            }} disabled={!account || !joyid_account}>Claim</ButtonBox>
+            <ButtonBox onClick={Claim} disabled={!account || !joyid_account}>Claim</ButtonBox>
 
         </UlBox>
 
