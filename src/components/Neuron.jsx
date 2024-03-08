@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {connect, PopupConifg} from "@joyid/ckb";
 import store from "../store";
 import {
-    getClaimNum,
+    getClaimNum, saveEthSignature,
     saveJoyid,
     saveJoyidSignMsg,
     saveNeuronAddress,
@@ -96,7 +96,7 @@ export default function Neuron(){
         }
         const signMsg = Sign(account,JSON.stringify(addressToScript(joyid_account))).then(res => {
             console.log('info',res);
-            store.dispatch(saveNeuronSignature(res));
+            store.dispatch(saveEthSignature(res));
             setShowClaimPopup(true);
         }).catch(err=>{
             console.log('error',err);
@@ -114,7 +114,7 @@ export default function Neuron(){
     return <>
         <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
             <Popup showPopup={showPopup} close={handleClose} />
-            <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
+            <ClaimPopup showPopup={showClaimPopup} claimType={'neuron'} close={handleCloseClaim} />
 
             <div className="flex card-main">
                 <div className="flex  flex-col  items-center">

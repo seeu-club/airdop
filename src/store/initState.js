@@ -6,6 +6,7 @@ export default {
   popup: false,
   joyid_sign_msg: '',
   neuron_signature:'',
+  eth_signature:'',
   neuron_address:'',
   ckb_claim_num:0,
   seeu_claim_num:0,

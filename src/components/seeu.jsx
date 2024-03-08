@@ -174,34 +174,14 @@ export default function Seeu(){
     function Claim() {
         if(!msg)return;
         signMessageInput();
-        // var myHeaders = new Headers();
-        // myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
-        // myHeaders.append("Content-Type", "application/json");
-        //
-        // var raw = JSON.stringify({
-        //     "message": JSON.parse(joyid_sign_msg),
-        //     "pubkey": account,
-        //     "signature": signature
-        // });
-        //
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: 'follow'
-        // };
-        //
-        // fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/bitcoin", requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => console.log(123,result))
-        //     .catch(error => console.log('error123', error));
+
     }
 
     return <>
         {
             showSign && <SignModal />
         }
-        <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
+        <ClaimPopup showPopup={showClaimPopup} claimType={'seeu'} close={handleCloseClaim} />
         <Box>
         <LftBox>
             <div className={!!joyid_account ? "li first active" : "li first"}>

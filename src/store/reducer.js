@@ -27,6 +27,9 @@ const mainSlice = createSlice({
         saveNeuronSignature(state, action) {
             state.neuron_signature = action.payload;
         },
+        saveEthSignature(state, action) {
+            state.eth_signature = action.payload;
+        },
         saveNeuronAddress(state, action) {
             state.neuron_address = action.payload;
         },
@@ -105,6 +108,7 @@ export const {
     savePopup,
     saveJoyidSignMsg,
     saveNeuronSignature,
+    saveEthSignature,
     saveNeuronAddress,
     saveNeuronClaimNum,
     saveSeeuClaimNum,
