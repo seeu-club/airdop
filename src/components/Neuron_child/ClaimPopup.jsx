@@ -16,7 +16,7 @@ const rpc = new RPC(CKB_RPC_URL)
 
 export default function ClaimPopup(props){
     const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
-    const [amount, setAmount] = React.useState('200');
+    const times = 200;
     const {showPopup,claimType,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
     const anchorEl = document.getElementsByClassName('middle-main')[0];
@@ -27,9 +27,13 @@ export default function ClaimPopup(props){
     const nSign = useSelector(store => store.neuron_signature);
     const eSign = useSelector(store => store.eth_signature);
     const sAccount = useSelector(store => store.account);
+    const sClaim = useSelector(store => store.seeu_claim_num);
+    const nClaim = useSelector(store => store.ckb_claim_num);
     const signature = claimType === 'seeu' ? sSign : neuronAddress ? nSign : eSign;
     const account = claimType === 'seeu' ? sAccount : neuronAddress ? neuronAddress : ethAccount;
     const chain = claimType === 'seeu' ? 'bitcoin' : neuronAddress ? 'ckb' : 'ethereum';
+    const ClaimNum = claimType === 'seeu' ? sClaim : nClaim;
+    const amount = ClaimNum * times;
 
     const handleClose = () => {
         close();
@@ -53,7 +57,6 @@ export default function ClaimPopup(props){
         console.log('signedTx', signedTx);
         //to yao  rpc发起交易
         const hash = await rpc.sendTransaction(signedTx, "passthrough")
-
         console.log('hash',hash)
         //to yao  rpc验证交易
         const result = await rpc.getTransaction(hash).then((res)=> {
@@ -61,13 +64,6 @@ export default function ClaimPopup(props){
             Claim(hash).then(re => {
                 handleClose();
             })
-
-
-
-
-
-
-
         })
 
     }
@@ -152,7 +148,7 @@ export default function ClaimPopup(props){
                             </div>
                         </div>
                         <div className="claim-popup-desc">
-                            You can claim <span className="claim-popup-active">182</span> NFT. You ned pay <span className="claim-popup-active">1000</span> CKB for Joy ID
+                            You can claim <span className="claim-popup-active">{ClaimNum}</span> NFT. You ned pay <span className="claim-popup-active">{amount}</span> CKB for Joy ID
                         </div>
                         <div className="flex justify-center ">
                             <Button className="claim-popup-button" aria-describedby={id} variant="contained" onClick={handleClick}>

@@ -83,14 +83,23 @@ export default function Neuron(){
         }));
         }, [account]);
     useEffect(() => {
-        store.dispatch(getClaimNum({
-            type: 'ckb',
-            address: neuronAddress,
-        }));
-    }, [neuronAddress]);
+        if (!showPopup && neuronAddress) {
+            store.dispatch(getClaimNum({
+                type: 'ckb',
+                address: neuronAddress,
+            }));
+        }
+    }, [showPopup]);
 
 
     function getSign() {
+        if (neuronClaimNum === 0) {
+            return;
+        }
+        if (neuronAddress) {
+            setShowClaimPopup(true);
+            return;
+        }
         if (!account) {
             return;
         }

@@ -111,6 +111,7 @@ export default function Seeu(){
     const signature = useSelector(store => store.signature);
     const showSign = useSelector(store => store.showSign);
     const [showClaimPopup, setShowClaimPopup] = useState(false);
+    const claimNum = useSelector(store => store.seeu_claim_num);
     const handleCloseClaim = () => {
         // store.dispatch(savePopup(true));
         setShowClaimPopup(false);
@@ -126,7 +127,7 @@ export default function Seeu(){
     }, [msg]);
 
     const signMessageInput = () =>{
-        if(!account || !type)return;
+        if(!account || !type || !claimNum)return;
         if(type === "OKX"){
             OkxSign()
         }else if(type === "Unisat"){
