@@ -94,13 +94,18 @@ export default function ClaimPopup(props){
         var myHeaders = new Headers();
         myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
         myHeaders.append("Content-Type", "application/json");
-
-        var raw = JSON.stringify({
+        const params = claimType === 'seeu' ? {
             "message": joyid_sign_msg,
             "pubkey": account,
             "signature": signature,
             "txid": hash
-        });
+        } : {
+            "message": joyid_sign_msg,
+            "expectedAddress": account,
+            "signature": signature,
+            "txid": hash
+        };
+        var raw = JSON.stringify();
 
         var requestOptions = {
             method: 'POST',
