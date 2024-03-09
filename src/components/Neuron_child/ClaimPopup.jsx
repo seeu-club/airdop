@@ -105,7 +105,7 @@ export default function ClaimPopup(props){
             "signature": signature,
             "txid": hash
         };
-        var raw = JSON.stringify();
+        var raw = JSON.stringify(params);
 
         var requestOptions = {
             method: 'POST',
