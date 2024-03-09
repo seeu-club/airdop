@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import store from "../../store";
-import {getClaimNum, saveAccount, saveShowSign, saveType} from "../../store/reducer.js";
+import {getClaimNum, saveAccount, savePublicKey, saveShowSign, saveType} from "../../store/reducer.js";
 
 import UnisatImg from "../../assets/unisat.png";
 
@@ -41,10 +41,13 @@ export default function Unisat({handleClose}){
     const connect = async() =>{
         if(disable)return;
         const result = await unisat.requestAccounts();
+        const pub = await unisat.getPublicKey();
         self.accounts = result;
 
         if (result.length > 0) {
             store.dispatch(saveAccount(result[0]));
+            store.dispatch(savePublicKey(pub));
+            console.log(222222222222222222222222,result);
             store.dispatch(saveType("Unisat"));
         }
         handleClose()

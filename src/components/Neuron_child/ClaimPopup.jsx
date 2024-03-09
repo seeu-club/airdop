@@ -28,10 +28,11 @@ export default function ClaimPopup(props){
     const nSign = useSelector(store => store.neuron_signature);
     const eSign = useSelector(store => store.eth_signature);
     const sAccount = useSelector(store => store.account);
+    const sPublicKey = useSelector(store => store.public_key);
     const sClaim = useSelector(store => store.seeu_claim_num);
     const nClaim = useSelector(store => store.ckb_claim_num);
     const signature = claimType === 'seeu' ? sSign : neuronAddress ? nSign : eSign;
-    const account = claimType === 'seeu' ? sAccount : neuronAddress ? neuronAddress : ethAccount;
+    const account = claimType === 'seeu' ? sPublicKey : neuronAddress ? neuronAddress : ethAccount;
     const chain = claimType === 'seeu' ? 'bitcoin' : neuronAddress ? 'ckb' : 'ethereum';
     const ClaimNum = claimType === 'seeu' ? sClaim : nClaim;
     const amount = ClaimNum * times;

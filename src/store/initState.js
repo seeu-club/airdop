@@ -1,5 +1,6 @@
 export default {
   account: null,
+  public_key: null,
   loading: null,
   type: null,
   joyid_account:null,

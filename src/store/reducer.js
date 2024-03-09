@@ -9,6 +9,9 @@ const mainSlice = createSlice({
         saveAccount(state, action) {
             state.account = action.payload;
         },
+        savePublicKey(state, action) {
+            state.public_key = action.payload;
+        },
         saveLoading(state, action) {
             state.loading = action.payload;
         },
@@ -103,6 +106,7 @@ const mainSlice = createSlice({
 
 export const {
     saveAccount,
+    savePublicKey,
     saveType,
     saveJoyid,
     savePopup,
