@@ -210,7 +210,7 @@ export default function Seeu(){
 
     </Box>
         <Tips>
-            Some simple introductions and descriptions of the text station space Balabala
+            NFT that are not claimed will be burned.
         </Tips>
     </>
 }

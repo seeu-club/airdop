@@ -57,7 +57,7 @@ function App() {
                                   <Navbar />
                                   <Hero />
                               </div>
-                              <Schedule />
+                              {/*<Schedule />*/}
                               <Footer />
                           </div>
                       </Provider>
