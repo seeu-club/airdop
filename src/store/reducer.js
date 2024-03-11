@@ -39,6 +39,9 @@ const mainSlice = createSlice({
         saveNeuronClaimNum(state, action) {
             state.ckb_claim_num = action.payload;
         },
+        saveClaimAllNum(state, action) {
+            state.claim_all_num = action.payload;
+        },
         saveSeeuClaimNum(state, action) {
             state.seeu_claim_num = action.payload;
         },
@@ -113,6 +116,7 @@ export const {
     saveJoyidSignMsg,
     saveNeuronSignature,
     saveEthSignature,
+    saveClaimAllNum,
     saveNeuronAddress,
     saveNeuronClaimNum,
     saveSeeuClaimNum,

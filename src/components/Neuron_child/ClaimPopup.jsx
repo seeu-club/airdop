@@ -15,7 +15,7 @@ const rpc = new RPC(CKB_RPC_URL)
 
 
 export default function ClaimPopup(props){
-    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqq9t0nn77we5qsyjfagxv396wewa6cac5zvsz9q3r');
+    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqq9t0nn77we5qsyjfagxv396wewa6cac5zvsz9q3r'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
     const [loading, setLoading] = React.useState(false);
     const times = 200;
     const {showPopup,claimType,close} = props;
@@ -27,7 +27,7 @@ export default function ClaimPopup(props){
     const sSign = useSelector(store => store.signature);
     const nSign = useSelector(store => store.neuron_signature);
     const eSign = useSelector(store => store.eth_signature);
-    const sAccount = useSelector(store => store.account);
+
     const sPublicKey = useSelector(store => store.public_key);
     const sClaim = useSelector(store => store.seeu_claim_num);
     const nClaim = useSelector(store => store.ckb_claim_num);

@@ -1,21 +1,16 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Countdown from "react-countdown";
+import store from "../store";
+import {getClaimNum, saveClaimAllNum, saveNeuronClaimNum, saveSeeuClaimNum} from "../store/reducer";
+import {useSelector} from "react-redux";
 
-// Random component
-// const Completionist = () => <span>You are good to go!</span>;
+
+
 
 // Renderer callback with condition
 const renderer = ({ hours, minutes, seconds, completed }) => {
-  // if (completed) {
-  //   // Render a complete state
-  //   return <Completionist />;
-  // } else {
-    // Render a countdown
-    return (
-      // <span>
-      //   {hours}:{minutes}:{seconds}
-      // </span>
 
+    return (
       <div className="flex flex-row font-['Anton'] ">
         <p className="font-bold text-lg ">
           <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{hours}</div>
@@ -39,6 +34,41 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
 
 
 const Hero = () => {
+    const claim_all_num = useSelector(store => store.claim_all_num);
+    const max_claim = 4200;
+    const [childWidth, setChildWidth] = React.useState(0);
+
+    const GetClaims = () => {
+        const myHeaders = new Headers();
+        myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
+        const requestOptions = {
+            method: 'GET',
+            headers: myHeaders,
+            redirect: 'follow'
+        };
+        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claimed/total", requestOptions)
+            .then(response => response.text())
+            .then(result => {
+                const res = JSON.parse(result);
+                if (res && res.data) {
+                    store.dispatch(saveClaimAllNum(res.data.claimed));
+                }
+            })
+            .catch(error => {
+                console.log('error11', error);
+            })
+            .finally();
+    }
+    useEffect(() => {
+        GetClaims();
+    }, []);
+    useEffect(() => {
+        if (claim_all_num <= 0) {
+            setChildWidth(0);
+            return;
+        }
+        setChildWidth((claim_all_num / max_claim  * 100).toFixed(2) + "%");
+    }, [claim_all_num]);
   return (
     <div className="w-full flex justify-center items-center mt-5 p-20">
         <div className="w-[80rem] h-[40rem] flex">
@@ -81,12 +111,12 @@ const Hero = () => {
             <div className="relative">
               <div className="bg-white text-gray-900 border-gray-100 focus:outline-none font-medium rounded-full  h-[0.75rem] dark:bg-gray-800 dark:text-white dark:border-gray-600 mt-3 bg-white/[.64] 
              ">
-                <div className=" text-gray-900 border-gray-100 focus:outline-none font-medium rounded-full w-[7rem] h-[0.75rem] dark:bg-gray-800 dark:text-white dark:border-gray-600 mt-3 
+                <div style={{width: childWidth}} className=" text-gray-900 border-gray-100 focus:outline-none font-medium rounded-full w-[7rem] h-[0.75rem] dark:bg-gray-800 dark:text-white dark:border-gray-600 mt-3
               bg-gradient-to-r from-[#46DDFF] to-[#FE609D] opacity-100 " >
                 </div>
               </div> 
               
-              <button type="button" className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 Navbar-icon-btn text-white bg-white-600 focus:ring-4 focus:outline-none rounded-lg text-sm text-center inline-flex items-center  ">
+              <button style={{left: childWidth}} type="button" className="absolute top-1/2 left-1/4 transform -translate-x-1/2 -translate-y-1/2 Navbar-icon-btn text-white bg-white-600 focus:ring-4 focus:outline-none rounded-lg text-sm text-center inline-flex items-center  ">
                     <img src="/logo-small.png" alt="buttonpng" border="0" width={28} height={28}  />
               </button>
             </div>
