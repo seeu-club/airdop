@@ -37,8 +37,7 @@ export default function ClaimPopup(props){
     const account = claimType === 'seeu' ? sPublicKey : neuronAddress ? neuronAddress : ethAccount;
     const chain = claimType === 'seeu' ? 'bitcoin' : neuronAddress ? 'ckb' : 'ethereum';
     const ClaimNum = claimType === 'seeu' ? sClaim : nClaim;
-    const getClaimType = claimType === 'seeu' ? 'bitcoin' : neuronAddress ? 'ckb' : 'ethereum';
-    const getClaimAccount = claimType === 'seeu' ? sAccount : neuronAddress ? neuronAddress : ethAccount;
+
     const amount = ClaimNum * times;
 
     const handleClose = () => {
@@ -76,14 +75,6 @@ export default function ClaimPopup(props){
                     if (res) {
                         clearInterval(timeout);
                         Claim(hash).then(re => {
-                            setLoading(false);
-
-                            store.dispatch(getClaimNum({
-                                type: getClaimType,
-                                address: getClaimAccount,
-                            }));
-                            openPop();
-                            handleClose();
                         })
                     }
                 })
@@ -130,7 +121,14 @@ export default function ClaimPopup(props){
 
         fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/"+ chain, requestOptions)
             .then(response => response.text())
-            .then(result => console.log('claim123',result))
+            .then(result => {
+                const res = JSON.parse(result);
+                if (res.code === 'ok') {
+                    openPop();
+                    handleClose();
+                }
+                setLoading(false);
+            })
             .catch(error => console.log('claim error 123', error));
     }
 

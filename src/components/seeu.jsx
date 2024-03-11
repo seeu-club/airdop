@@ -187,7 +187,7 @@ export default function Seeu(){
             showSign && <SignModal />
         }
         <ClaimPopup showPopup={showClaimPopup} claimType={'seeu'} openPop={handleOpenSuccess} close={handleCloseClaim} />
-        <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
+        <ClaimSuccessPopup showPopup={showSuccessPopup} claimType={'seeu'} close={handleCloseSuccess} />
         <Box>
         <LftBox>
             <div className={!!joyid_account ? "li first active" : "li first"}>

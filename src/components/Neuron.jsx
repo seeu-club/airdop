@@ -141,7 +141,7 @@ export default function Neuron(){
         <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
             <Popup showPopup={showPopup} close={handleClose} />
             <ClaimPopup showPopup={showClaimPopup} claimType={'neuron'} openPop={handleOpenSuccess} close={handleCloseClaim} />
-            <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
+            <ClaimSuccessPopup showPopup={showSuccessPopup} claimType={'neuron'} close={handleCloseSuccess} />
             <div className="flex card-main">
                 <div className="flex  flex-col  items-center">
                     <div className={joyid_account ? "card-border-top card-border-1" : "card-border-bottom card-border-1"}>
