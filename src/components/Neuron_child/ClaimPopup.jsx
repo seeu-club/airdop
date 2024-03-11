@@ -38,6 +38,9 @@ export default function ClaimPopup(props){
     const amount = ClaimNum * times;
 
     const handleClose = () => {
+        if (loading) {
+            return;
+        }
         close();
     };
 

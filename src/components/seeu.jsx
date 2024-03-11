@@ -104,6 +104,7 @@ const LftBox = styled.div`
 
 export default function Seeu(){
     const account = useSelector(store => store.account);
+    const seeu_claim_num = useSelector(store => store.seeu_claim_num);
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
     const [msg,setMsg] = useState();
     const type = useSelector(store => store.type);
@@ -204,7 +205,7 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox onClick={Claim} disabled={!account || !joyid_account}>Claim</ButtonBox>
+            <ButtonBox onClick={Claim} disabled={!account || !joyid_account || seeu_claim_num <= 0 }>Claim</ButtonBox>
 
         </UlBox>
 
