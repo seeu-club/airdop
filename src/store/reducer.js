@@ -9,6 +9,9 @@ const mainSlice = createSlice({
         saveAccount(state, action) {
             state.account = action.payload;
         },
+        savePublicKey(state, action) {
+            state.public_key = action.payload;
+        },
         saveLoading(state, action) {
             state.loading = action.payload;
         },
@@ -27,11 +30,17 @@ const mainSlice = createSlice({
         saveNeuronSignature(state, action) {
             state.neuron_signature = action.payload;
         },
+        saveEthSignature(state, action) {
+            state.eth_signature = action.payload;
+        },
         saveNeuronAddress(state, action) {
             state.neuron_address = action.payload;
         },
         saveNeuronClaimNum(state, action) {
             state.ckb_claim_num = action.payload;
+        },
+        saveClaimAllNum(state, action) {
+            state.claim_all_num = action.payload;
         },
         saveSeeuClaimNum(state, action) {
             state.seeu_claim_num = action.payload;
@@ -100,11 +109,14 @@ const mainSlice = createSlice({
 
 export const {
     saveAccount,
+    savePublicKey,
     saveType,
     saveJoyid,
     savePopup,
     saveJoyidSignMsg,
     saveNeuronSignature,
+    saveEthSignature,
+    saveClaimAllNum,
     saveNeuronAddress,
     saveNeuronClaimNum,
     saveSeeuClaimNum,

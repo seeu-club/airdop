@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from "react";
 import store from "../../store";
-import {getClaimNum, saveAccount, saveShowSign, saveType} from "../../store/reducer";
+import {getClaimNum, saveAccount, savePublicKey, saveShowSign, saveType} from "../../store/reducer";
 
 import OkxImg from "../../assets/okx.png";
 
@@ -44,9 +44,11 @@ export default function Okx({handleClose}){
     const connect = async() =>{
         if(disable)return;
         const result = await okxwallet.bitcoin.connect();
+        console.log(111111111111111,result);
         self.accounts = result.address;
         if (result.address) {
             store.dispatch(saveAccount(result.address));
+            store.dispatch(savePublicKey(result.compressedPublicKey));
             store.dispatch(saveType("OKX"));
         }
         handleClose()

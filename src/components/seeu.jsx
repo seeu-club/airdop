@@ -6,15 +6,9 @@ import SelectedImg from "../assets/selected.png";
 import {useSelector} from "react-redux";
 import SignModal from "./unisat_okx/signModal";
 import store from "../store";
-import {saveJoyid, saveShowSign} from "../store/reducer";
+import {saveJoyid, saveShowSign, saveSignature} from "../store/reducer";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
-import { connect, signTransaction } from '@joyid/ckb';
-
-import {  RPC} from "@ckb-lumos/rpc"
-
-const CKB_RPC_URL = "https://testnet.ckb.dev/rpc"
-
-const rpc = new RPC(CKB_RPC_URL)
+import ClaimSuccessPopup from "./Neuron_child/ClaimSuccessPopup";
 
 const Box = styled.div`
     margin-top: 24px;
@@ -27,6 +21,8 @@ const Tips = styled.div`
     color: #727778;
     font-size: 12px;
     margin-top: 10px;
+        text-align: center;
+
 `
 
 const UlBox = styled.div`
@@ -110,85 +106,88 @@ const LftBox = styled.div`
 `
 
 export default function Seeu(){
-    //to yao  这里是joyid发起转账的代码
-    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
-    const [amount, setAmount] = React.useState('200');
     const account = useSelector(store => store.account);
+    const seeu_claim_num = useSelector(store => store.seeu_claim_num);
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg)
+    const [msg,setMsg] = useState();
     const type = useSelector(store => store.type);
     const joyid_account = useSelector(store => store.joyid_account);
-    const signature = useSelector(store => store.signature);
     const showSign = useSelector(store => store.showSign);
     const [showClaimPopup, setShowClaimPopup] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const claimNum = useSelector(store => store.seeu_claim_num);
     const handleCloseClaim = () => {
         // store.dispatch(savePopup(true));
         setShowClaimPopup(false);
     };
+    const handleCloseSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(false);
+    };
+    const handleOpenSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(true);
+    };
 
     useEffect(() => {
-        console.log("====",!account,showSign === false)
-        if(!account || showSign === false)return;
-        console.error("=======")
-        store.dispatch(saveShowSign(true));
+        //ToDO:需要調用接口獲取message
+        setMsg(joyid_sign_msg);
+    }, [joyid_sign_msg]);
+
+    useEffect(() => {
+
+    }, [msg]);
+
+    const signMessageInput = () =>{
+        if(!account || !type || !claimNum)return;
+        if(type === "OKX"){
+            OkxSign()
+        }else if(type === "Unisat"){
+            UnisatSign()
+        }
+    }
+
+    const UnisatSign = async() =>{
+        try{
+            const sign = await unisat.signMessage(msg);
+            console.log(sign)
+            store.dispatch(saveSignature(sign));
+            setShowClaimPopup(true);
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
+    const OkxSign = async () =>{
+
+        try{
+            const sign = await okxwallet.bitcoin.signMessage(msg, 'ecdsa').then((res)=>{
+                console.log(res)
+                store.dispatch(saveSignature(res));
+                setShowClaimPopup(true);
+            });
 
 
-    }, [account,signature]);
+        }catch (e) {
+            console.log("==UnisatSign===",e)
+        }
+
+    }
+
 
     function Claim() {
-        // var myHeaders = new Headers();
-        // myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
-        // myHeaders.append("Content-Type", "application/json");
-        //
-        // var raw = JSON.stringify({
-        //     "message": JSON.parse(joyid_sign_msg),
-        //     "pubkey": account,
-        //     "signature": signature
-        // });
-        //
-        // var requestOptions = {
-        //     method: 'POST',
-        //     headers: myHeaders,
-        //     body: raw,
-        //     redirect: 'follow'
-        // };
-        //
-        // fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/bitcoin", requestOptions)
-        //     .then(response => response.text())
-        //     .then(result => console.log(123,result))
-        //     .catch(error => console.log('error123', error));
-
-        setShowClaimPopup(true);
-
+        if(!msg)return;
+        signMessageInput();
 
     }
-
-
-    const onSign = async () => {
-
-        const signedTx = await signTransaction({
-            to: toAddress,
-            from: joyid_account,
-            amount: BigInt(Number(amount) * 10 ** 8).toString(),
-        }).catch(e => {
-            console.log(e)
-        });
-        // const txHash = await sendTransaction(signedTx);
-        console.log('signedTx', signedTx);
-        //to yao  rpc发起交易
-        const hash = await rpc.sendTransaction(signedTx, "passthrough")
-
-        console.log('hash',hash)
-        //to yao  rpc验证交易
-        const result = await rpc.getTransaction(hash)
-        console.log('result',result)
-    }
-
 
     return <>
         {
             showSign && <SignModal />
         }
-        <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
+        <ClaimPopup showPopup={showClaimPopup} claimType={'seeu'} openPop={handleOpenSuccess} close={handleCloseClaim} />
+        <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
         <Box>
         <LftBox>
             <div className={!!joyid_account ? "li first active" : "li first"}>
@@ -210,15 +209,13 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox onClick={() => {
-                onSign()
-            }} disabled={!account || !joyid_account}>Claim</ButtonBox>
+            <ButtonBox onClick={Claim} disabled={!account || !joyid_account || seeu_claim_num <= 0 }>Claim</ButtonBox>
 
         </UlBox>
 
     </Box>
         <Tips>
-            Some simple introductions and descriptions of the text station space Balabala
+            NFT that are not claimed will be burned.
         </Tips>
     </>
 }

@@ -100,7 +100,7 @@ export default function Unisat_okx (){
                     <img src={UnisatImg} alt="" className="rht"/>
                 </ImgBox>
                 <TitBox>Connect</TitBox>
-                <Btn onClick={() => handleShow()} disabled={!joyid_account}>Connect Btc Wallet</Btn>
+                <Btn onClick={() => handleShow()} disabled={!joyid_account}>Connect BTC Wallet</Btn>
             </>
         }
         {

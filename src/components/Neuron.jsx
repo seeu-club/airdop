@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {connect, PopupConifg} from "@joyid/ckb";
 import store from "../store";
 import {
-    getClaimNum,
+    getClaimNum, saveEthSignature,
     saveJoyid,
     saveJoyidSignMsg,
     saveNeuronAddress,
@@ -20,6 +20,7 @@ import {useAccount,useWalletClient} from "wagmi";
 import {shortAddress} from "../utils/global";
 import { addressToScript } from "@nervosnetwork/ckb-sdk-utils";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
+import ClaimSuccessPopup from "./Neuron_child/ClaimSuccessPopup";
 
 
 const Btn = styled.button`
@@ -38,6 +39,12 @@ const Btn = styled.button`
         opacity: 0.6;
        cursor: not-allowed;
    }
+`
+
+const Tips = styled.div`
+    color: #727778;
+    font-size: 12px;
+    margin-top: 10px;
 `
 
 export default function Neuron(){
@@ -59,6 +66,7 @@ export default function Neuron(){
     const joyid_account = useSelector(store => store.joyid_account);
     const neuronAddress = useSelector(store => store.neuron_address);
     const neuronClaimNum = useSelector(store => store.ckb_claim_num);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const { address: account } = useAccount();
     const onConnect = async() =>{
         try {
@@ -69,6 +77,15 @@ export default function Neuron(){
             console.error(error);
         }
     }
+
+    const handleCloseSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(false);
+    };
+    const handleOpenSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(true);
+    };
 
     const DisconnectNeuron = () => {
         store.dispatch(saveNeuronAddress(''));
@@ -83,20 +100,29 @@ export default function Neuron(){
         }));
         }, [account]);
     useEffect(() => {
-        store.dispatch(getClaimNum({
-            type: 'ckb',
-            address: neuronAddress,
-        }));
-    }, [neuronAddress]);
+        if (!showPopup && neuronAddress) {
+            store.dispatch(getClaimNum({
+                type: 'ckb',
+                address: neuronAddress,
+            }));
+        }
+    }, [showPopup]);
 
 
     function getSign() {
+        if (neuronClaimNum <= 0) {
+            return;
+        }
+        if (neuronAddress) {
+            setShowClaimPopup(true);
+            return;
+        }
         if (!account) {
             return;
         }
         const signMsg = Sign(account,JSON.stringify(addressToScript(joyid_account))).then(res => {
             console.log('info',res);
-            store.dispatch(saveNeuronSignature(res));
+            store.dispatch(saveEthSignature(res));
             setShowClaimPopup(true);
         }).catch(err=>{
             console.log('error',err);
@@ -114,27 +140,38 @@ export default function Neuron(){
     return <>
         <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
             <Popup showPopup={showPopup} close={handleClose} />
-            <ClaimPopup showPopup={showClaimPopup} close={handleCloseClaim} />
-
+            <ClaimPopup showPopup={showClaimPopup} claimType={'neuron'} openPop={handleOpenSuccess} close={handleCloseClaim} />
+            <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
             <div className="flex card-main">
                 <div className="flex  flex-col  items-center">
-                    <div className="card-border-top card-border-1">
+                    <div className={joyid_account ? "card-border-top card-border-1" : "card-border-bottom card-border-1"}>
 
                     </div>
-                    <div>
+                    {joyid_account ? (<div>
                         <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <rect y="0.5" width="24" height="24" rx="12" fill="#07CEFA"/>
                             <path d="M18.7068 9.26591L11.0405 17.1968C10.8594 17.384 10.6093 17.5 10.333 17.5C10.0568 17.5 9.80667 17.384 9.6255 17.1968L5.293 12.7138C5.11201 12.5275 5 12.2687 5 11.9829C5 11.4114 5.44791 10.9488 5.99953 10.9488C6.27577 10.9488 6.526 11.0647 6.7071 11.2519L10.333 15.0022L17.2929 7.80221C17.474 7.61589 17.7241 7.5 18.0003 7.5C18.5518 7.5 19 7.9634 19 8.534C19 8.81982 18.8879 9.07866 18.7068 9.26591Z" fill="white"/>
                         </svg>
 
-                    </div>
-                    <div className="card-border-top card-border-2">
+                    </div>)
+                    : (<div className="card-border-round">
+
+                        </div>)}
+
+                    <div className={account || neuronAddress ? "card-border-top card-border-2" : "card-border-bottom card-border-2"}>
 
                     </div>
-                    <div className="card-border-round">
+                    {account || neuronAddress ? (<div>
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="0.5" width="24" height="24" rx="12" fill="#07CEFA"/>
+                                <path d="M18.7068 9.26591L11.0405 17.1968C10.8594 17.384 10.6093 17.5 10.333 17.5C10.0568 17.5 9.80667 17.384 9.6255 17.1968L5.293 12.7138C5.11201 12.5275 5 12.2687 5 11.9829C5 11.4114 5.44791 10.9488 5.99953 10.9488C6.27577 10.9488 6.526 11.0647 6.7071 11.2519L10.333 15.0022L17.2929 7.80221C17.474 7.61589 17.7241 7.5 18.0003 7.5C18.5518 7.5 19 7.9634 19 8.534C19 8.81982 18.8879 9.07866 18.7068 9.26591Z" fill="white"/>
+                            </svg>
 
-                    </div>
-                    <div className="card-border-bottom card-border-3">
+                        </div>)
+                        : (<div className="card-border-round">
+
+                        </div>)}
+                    <div className={account || neuronAddress ? "card-border-top card-border-3" :  "card-border-bottom card-border-3"}>
 
                     </div>
                     <div className="card-border-round">
@@ -310,13 +347,15 @@ export default function Neuron(){
                         </>)}
                     </div>
                     <div>
-                        <Button onClick={getSign} disabled={!joyid_account || (!account && !neuronAddress)} className={joyid_account && (account || neuronAddress) ? "Claim-button claim-active-button" : "Claim-button"} variant="contained">
+                        <Button onClick={getSign} disabled={!joyid_account || (!account && !neuronAddress) || neuronClaimNum <=0 } className={joyid_account && (account || neuronAddress) && neuronClaimNum > 0  ? "Claim-button claim-active-button" : "Claim-button"} variant="contained">
                             Claim
                         </Button>
                     </div>
                 </div>
             </div>
-
+            <Tips>
+                NFT that are not claimed will be burned.
+            </Tips>
         </div>
 
     </>
