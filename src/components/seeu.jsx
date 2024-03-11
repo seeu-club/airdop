@@ -8,6 +8,7 @@ import SignModal from "./unisat_okx/signModal";
 import store from "../store";
 import {saveJoyid, saveShowSign, saveSignature} from "../store/reducer";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
+import ClaimSuccessPopup from "./Neuron_child/ClaimSuccessPopup";
 
 const Box = styled.div`
     margin-top: 24px;
@@ -20,6 +21,8 @@ const Tips = styled.div`
     color: #727778;
     font-size: 12px;
     margin-top: 10px;
+        text-align: center;
+
 `
 
 const UlBox = styled.div`
@@ -109,13 +112,21 @@ export default function Seeu(){
     const [msg,setMsg] = useState();
     const type = useSelector(store => store.type);
     const joyid_account = useSelector(store => store.joyid_account);
-    const signature = useSelector(store => store.signature);
     const showSign = useSelector(store => store.showSign);
     const [showClaimPopup, setShowClaimPopup] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const claimNum = useSelector(store => store.seeu_claim_num);
     const handleCloseClaim = () => {
         // store.dispatch(savePopup(true));
         setShowClaimPopup(false);
+    };
+    const handleCloseSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(false);
+    };
+    const handleOpenSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(true);
     };
 
     useEffect(() => {
@@ -164,14 +175,6 @@ export default function Seeu(){
 
     }
 
-    // useEffect(() => {
-    //     console.log("====",!account,showSign === false)
-    //     if(!account || showSign === false)return;
-    //     console.error("=======")
-    //     store.dispatch(saveShowSign(true));
-    //
-    //
-    // }, [account,signature]);
 
     function Claim() {
         if(!msg)return;
@@ -183,7 +186,8 @@ export default function Seeu(){
         {
             showSign && <SignModal />
         }
-        <ClaimPopup showPopup={showClaimPopup} claimType={'seeu'} close={handleCloseClaim} />
+        <ClaimPopup showPopup={showClaimPopup} claimType={'seeu'} openPop={handleOpenSuccess} close={handleCloseClaim} />
+        <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
         <Box>
         <LftBox>
             <div className={!!joyid_account ? "li first active" : "li first"}>

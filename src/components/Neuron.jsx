@@ -20,6 +20,7 @@ import {useAccount,useWalletClient} from "wagmi";
 import {shortAddress} from "../utils/global";
 import { addressToScript } from "@nervosnetwork/ckb-sdk-utils";
 import ClaimPopup from "./Neuron_child/ClaimPopup";
+import ClaimSuccessPopup from "./Neuron_child/ClaimSuccessPopup";
 
 
 const Btn = styled.button`
@@ -38,6 +39,12 @@ const Btn = styled.button`
         opacity: 0.6;
        cursor: not-allowed;
    }
+`
+
+const Tips = styled.div`
+    color: #727778;
+    font-size: 12px;
+    margin-top: 10px;
 `
 
 export default function Neuron(){
@@ -59,6 +66,7 @@ export default function Neuron(){
     const joyid_account = useSelector(store => store.joyid_account);
     const neuronAddress = useSelector(store => store.neuron_address);
     const neuronClaimNum = useSelector(store => store.ckb_claim_num);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const { address: account } = useAccount();
     const onConnect = async() =>{
         try {
@@ -69,6 +77,15 @@ export default function Neuron(){
             console.error(error);
         }
     }
+
+    const handleCloseSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(false);
+    };
+    const handleOpenSuccess = () => {
+        // store.dispatch(savePopup(true));
+        setShowSuccessPopup(true);
+    };
 
     const DisconnectNeuron = () => {
         store.dispatch(saveNeuronAddress(''));
@@ -123,8 +140,8 @@ export default function Neuron(){
     return <>
         <div id="tab-content-ckb"  className="flex  flex-col  justify-center items-center content-center m-7 mt-10 ">
             <Popup showPopup={showPopup} close={handleClose} />
-            <ClaimPopup showPopup={showClaimPopup} claimType={'neuron'} close={handleCloseClaim} />
-
+            <ClaimPopup showPopup={showClaimPopup} claimType={'neuron'} openPop={handleOpenSuccess} close={handleCloseClaim} />
+            <ClaimSuccessPopup showPopup={showSuccessPopup} close={handleCloseSuccess} />
             <div className="flex card-main">
                 <div className="flex  flex-col  items-center">
                     <div className={joyid_account ? "card-border-top card-border-1" : "card-border-bottom card-border-1"}>
@@ -336,7 +353,9 @@ export default function Neuron(){
                     </div>
                 </div>
             </div>
-
+            <Tips>
+                NFT that are not claimed will be burned.
+            </Tips>
         </div>
 
     </>
