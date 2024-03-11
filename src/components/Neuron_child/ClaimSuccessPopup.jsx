@@ -2,16 +2,30 @@ import React, {useState} from "react";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
 import LoadingButton from '@mui/lab/LoadingButton';
+import store from "../../store";
+import {getClaimNum} from "../../store/reducer";
+import {useSelector} from "react-redux";
+import {useAccount} from "wagmi";
 
 export default function ClaimSuccessPopup(props){
 
-    const {showPopup,close} = props;
+    const {showPopup,claimType,close} = props;
+    const sAccount = useSelector(store => store.account);
+    const neuronAddress = useSelector(store => store.neuron_address);
+    const { address: ethAccount } = useAccount();
     const anchorEl = document.getElementsByClassName('middle-main')[0];
-
+    const getClaimType = claimType === 'seeu' ? 'bitcoin' : neuronAddress ? 'ckb' : 'ethereum';
+    const getClaimAccount = claimType === 'seeu' ? sAccount : neuronAddress ? neuronAddress : ethAccount;
 
     const handleClose = () => {
+        store.dispatch(getClaimNum({
+            type: getClaimType,
+            address: getClaimAccount,
+        }));
         close();
     };
+
+
 
     const open = Boolean(showPopup);
     const id = open ? 'simple-popover' : undefined;
@@ -62,7 +76,7 @@ export default function ClaimSuccessPopup(props){
                         <div className="flex justify-center ">
                             <LoadingButton
                                 loading={false}
-                                onClick={close}
+                                onClick={handleClose}
                                 className={"claim-popup-button"}
                                 aria-describedby={id}
                                 variant="outlined"
