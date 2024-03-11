@@ -15,7 +15,7 @@ const rpc = new RPC(CKB_RPC_URL)
 
 
 export default function ClaimPopup(props){
-    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw');
+    const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqq9t0nn77we5qsyjfagxv396wewa6cac5zvsz9q3r');
     const [loading, setLoading] = React.useState(false);
     const times = 200;
     const {showPopup,claimType,close} = props;
@@ -133,7 +133,7 @@ export default function ClaimPopup(props){
                     open={showPopup}
                     anchorEl={anchorEl}
                     onClose={handleClose}
-                    classes="claim-position"
+                    // classes="claim-position"
                     // anchorPosition={{left: 500, top: 500}}
                     // anchorReference={'anchorPosition'}
                     anchorOrigin={{
