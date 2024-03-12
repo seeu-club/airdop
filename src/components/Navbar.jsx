@@ -14,13 +14,13 @@ const Navbar = () => {
                 </div>
 
                 <div className="w-[24rem] md:w-[48rem] lg:w-[64rem] h-15 flex flex-row-reverse items-center">
-                    <button className="Navbar-icon-btn-right ml-4 float-right bg-white hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-full">
+                    <a href={'https://twitter.com/seeu_brc20'} className="Navbar-icon-btn-right ml-4 float-right bg-white text-white font-bold py-3 px-3 rounded-full">
                         <img src="/x.png" alt="buttonpng" border="0" width={24} height={24}  />
-                    </button>
+                    </a>
 
-                    <button className="Navbar-icon-btn-right float-right bg-white hover:bg-blue-700 text-white font-bold py-3 px-3 rounded-full">
+                    <a href={'https://t.me/seeubtc'} className="Navbar-icon-btn-right float-right bg-white text-white font-bold py-3 px-3 rounded-full">
                         <img src="/tg.png" alt="buttonpng" border="0" width={24} height={24}  />
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
