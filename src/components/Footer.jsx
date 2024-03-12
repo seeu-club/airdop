@@ -16,7 +16,7 @@ const Footer = () => {
             <div className="columns-[33.75rem] bottom-card-left py-6 px-12 rounded-l-3xl">
                 <div className="bottom-tab-container flex gap-8" >
                     <div className={showSeeuTab ? "bottom-tab bottom-tab-hover" : "bottom-tab"} onClick={() => setActiveTab(true)}>
-                        Seeu
+                        SeeU
                     </div>
                     <div className={showSeeuTab ? "bottom-tab" : "bottom-tab bottom-tab-hover"} onClick={() => setActiveTab(false)}>
                         CKB

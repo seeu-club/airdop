@@ -188,7 +188,7 @@ export default function Neuron(){
                                         <img className="neuron-icon" src="joid.png" alt=""/>
                                     </div>
                                     <div className="neuron-title">
-                                        JoyId
+                                        JoyID
                                     </div>
                                     <Button onClickCapture={() => onConnect()} className="joyid-button" variant="contained">
                                         Connect JoyID
