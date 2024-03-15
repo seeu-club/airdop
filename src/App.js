@@ -31,7 +31,7 @@ import {
 
 initConfig({
     name: "Unicorn",
-    logo: "http://localhost:3000",
+    logo: "https://unicorn.seeuclub.xyz/box.jpg",
     joyidAppURL: "https://app.joy.id/",
 });
 const config = getDefaultConfig({
