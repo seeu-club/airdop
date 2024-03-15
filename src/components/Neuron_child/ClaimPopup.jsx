@@ -11,7 +11,7 @@ import {useAccount} from "wagmi";
 import store from "../../store";
 import {getClaimNum} from "../../store/reducer";
 
-const CKB_RPC_URL = "https://testnet.ckb.dev/rpc"
+const CKB_RPC_URL = "https://mainnet.ckb.dev/rpc"
 
 const rpc = new RPC(CKB_RPC_URL)
 
