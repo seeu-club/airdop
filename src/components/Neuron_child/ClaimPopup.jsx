@@ -187,7 +187,7 @@ export default function ClaimPopup(props){
                             </div>
                         </div>
                         <div className="claim-popup-desc">
-                            You can claim <span className="claim-popup-active">{ClaimNum}</span> NFT. You ned pay <span className="claim-popup-active">{amount}</span> CKB for Joy ID
+                            You can claim <span className="claim-popup-active">{ClaimNum}</span> NFT.  Pay <span className="claim-popup-active">{amount}</span> $CKB which will be encapsulated in Unicorn, redeemable anytime.
                         </div>
                         <div className="flex justify-center ">
                             {/*<Button >*/}
