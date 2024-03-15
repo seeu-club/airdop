@@ -90,7 +90,9 @@ const Hero = () => {
             <p className="font-bold text-6xl mb-3 tracking-wider font-['NationalPark'] ">Claim Unicorn NFT</p>
             <div className="">
               <div className="font-light text-lg">Total amount: <span className="font-bold">21000</span></div>
-              <p className="font-light text-lg ">Price: <span className='font-bold'>0.19527</span> $CKB</p>
+              {/*<p className="font-light text-lg ">Price: <span className='font-bold'>0.19527</span> $CKB</p>*/}
+              <p className="font-light text-lg ">Free mint
+                  (340 $CKB paid will be encapsulated in Unicorn, redeemable anytime)</p>
               {/*<p className="font-light text-lg ">Max mint per address: <span className='font-bold'>1</span></p>*/}
             </div>
             
