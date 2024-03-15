@@ -215,7 +215,7 @@ export default function Seeu(){
 
     </Box>
         <Tips>
-            NFT that are not claimed will be burned.
+            DOBs that are not claimed will be burned.
         </Tips>
     </>
 }

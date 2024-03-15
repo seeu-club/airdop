@@ -87,7 +87,7 @@ const Hero = () => {
           </div>
           
           <div className="h-[30rem] w-[28rem] mt-20 ml-10 text-[#131314]">
-            <p className="font-bold text-6xl mb-3 tracking-wider font-['NationalPark'] ">Claim Unicorn NFT</p>
+            <p className="font-bold text-6xl mb-3 tracking-wider font-['NationalPark'] ">Claim Unicorn DOBs</p>
             <div className="">
               <div className="font-light text-lg">Total amount: <span className="font-bold">21000</span></div>
               {/*<p className="font-light text-lg ">Price: <span className='font-bold'>0.19527</span> $CKB</p>*/}
@@ -143,7 +143,7 @@ const Hero = () => {
             </div>
 
 
-            <p className="font-bold text-lg mt-3 text-[#727778] font-['NationalPark']">The total supply of Unicorn NFTs is 21,000: 20% airdrop, 80% will be obtained through staking mining.</p>
+            <p className="font-bold text-lg mt-3 text-[#727778] font-['NationalPark']">The total supply of Unicorn DOBs is 21,000: 20% airdrop, 80% will be obtained through staking mining.</p>
          
             {/*<button className="bg-gradient-to-b from-[#07CEFA] to-[#0794FA] hover:from-[#FE609D] hover:to-yellow-500  text-white font-bold w-[10rem] h-[3.5rem] py-3 px-4 rounded-2xl font-bold text-xl mt-6">*/}
             {/*  Mint*/}

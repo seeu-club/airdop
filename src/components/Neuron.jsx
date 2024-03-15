@@ -225,7 +225,7 @@ export default function Neuron(){
                                         <span className="font-bold neuron-claim-nft-num">
                                             {neuronClaimNum}
                                         </span>
-                                        NFTs.
+                                        DOBs.
                                     </div>
                                 </>) : (<>
                                     <div >
@@ -278,7 +278,7 @@ export default function Neuron(){
                                         <span className="font-bold neuron-claim-nft-num">
                                             {neuronClaimNum}
                                     </span>
-                                        NFTs.
+                                        DOBs.
                                     </div>
                                 </>)}
                             </>
@@ -352,7 +352,7 @@ export default function Neuron(){
                 </div>
             </div>
             <Tips>
-                NFT that are not claimed will be burned.
+                DOBs that are not claimed will be burned.
             </Tips>
         </div>
 

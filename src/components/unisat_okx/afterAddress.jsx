@@ -91,7 +91,7 @@ export default function AfterAddress(){
             <span className="font-bold neuron-claim-nft-num">
                 {claimNum}
                                         </span>
-            NFTs.
+            DOBs.
         </div>
     </AfterBox>
 }

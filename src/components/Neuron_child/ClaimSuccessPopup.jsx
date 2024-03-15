@@ -67,7 +67,7 @@ export default function ClaimSuccessPopup(props){
                             </div>
                         </div>
                         <div className="claim-popup-desc">
-                            Congratulations on claiming your NFT! You can view your newly acquired NFT by visiting <a
+                            Congratulations on claiming your DOBs! You can view your newly acquired DOBs by visiting <a
                             href="https://app.joy.id/" alt={'https://app.joy.id/'}
                             style={{color:"#1c85f1",cursor:'pointer'}}
 
