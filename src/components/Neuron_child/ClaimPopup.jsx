@@ -123,7 +123,8 @@ export default function ClaimPopup(props){
             .then(response => response.text())
             .then(result => {
                 const res = JSON.parse(result);
-                if (res.code === 'ok') {
+                console.log(res.code);
+                if (res.code === 'ok' || res.code === 'OK') {
                     openPop();
                     handleClose();
                 }
