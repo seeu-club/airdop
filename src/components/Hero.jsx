@@ -55,7 +55,7 @@ const Hero = () => {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch("https://seeu-nft-rest.matrixlabs.org/nfts/claimed/total", requestOptions)
+        fetch("https://api-airdrop.seeuclub.xyz/nfts/claimed/total", requestOptions)
             .then(response => response.text())
             .then(result => {
                 const res = JSON.parse(result);

@@ -119,7 +119,7 @@ export default function ClaimPopup(props){
             redirect: 'follow'
         };
 
-        fetch("https://seeu-nft-rest.matrixlabs.org/nfts/claim/"+ chain, requestOptions)
+        fetch("https://api-airdrop.seeuclub.xyz/nfts/claim/"+ chain, requestOptions)
             .then(response => response.text())
             .then(result => {
                 const res = JSON.parse(result);
