@@ -17,7 +17,7 @@ const rpc = new RPC(CKB_RPC_URL)
 
 
 export default function ClaimPopup(props){
-    const [toAddress, setToAddress] = React.useState('ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsqwpvywnh65q6dcwqwmghtgvtrtkx6pcpasprkz0k'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
+    const [toAddress, setToAddress] = React.useState('ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq26z89hep8l4vsg5ttj7hcepnxxhy6yzns7ftt7q'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
     const [loading, setLoading] = React.useState(false);
     const times = 340;
     const {showPopup,claimType,openPop,close} = props;
