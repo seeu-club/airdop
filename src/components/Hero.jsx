@@ -8,12 +8,21 @@ import {useSelector} from "react-redux";
 
 
 // Renderer callback with condition
-const renderer = ({ hours, minutes, seconds, completed }) => {
+const renderer = ({ formatted
+                      , completed }) => {
+    const {days,hours, minutes, seconds} =  formatted;
 
     return (
       <div className="flex flex-row font-['Anton'] ">
+          <p className="font-bold text-lg ">
+              <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{days}</div>
+          </p>
+
+          <div className="pt-3 pr-3 pl-1 font-bold text-4xl text-[#727778]">:</div>
         <p className="font-bold text-lg ">
-          <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{hours}</div>
+          <div style={{
+              width: hours > 99 ? '5rem' : '4rem'
+          }} className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{hours}</div>
         </p>
 
         <div className="pt-3 pr-3 pl-1 font-bold text-4xl text-[#727778]">:</div>
@@ -22,11 +31,11 @@ const renderer = ({ hours, minutes, seconds, completed }) => {
           <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{minutes}</div>
         </p>
 
-        <div className="pt-3 pr-3 pl-1 font-bold text-4xl text-[#727778]">:</div>
+        {/*<div className="pt-3 pr-3 pl-1 font-bold text-4xl text-[#727778]">:</div>*/}
 
-        <p className="font-bold text-lg ">
-          <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{seconds}</div>
-        </p>
+        {/*<p className="font-bold text-lg ">*/}
+        {/*  <div className="text-[#FE609D] bg-white border border-gray-100 focus:outline-none font-medium rounded-2xl px-3 py-3 me-2 mb-2 w-[4rem] h-[4rem] text-4xl text-center">{seconds}</div>*/}
+        {/*</p>*/}
       </div>
     );
   // }
@@ -46,7 +55,7 @@ const Hero = () => {
             headers: myHeaders,
             redirect: 'follow'
         };
-        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claimed/total", requestOptions)
+        fetch("https://seeu-nft-rest.matrixlabs.org/nfts/claimed/total", requestOptions)
             .then(response => response.text())
             .then(result => {
                 const res = JSON.parse(result);
@@ -69,6 +78,7 @@ const Hero = () => {
         }
         setChildWidth((claim_all_num / max_claim  * 100).toFixed(2) + "%");
     }, [claim_all_num]);
+
   return (
     <div className="w-full flex justify-center items-center mt-5 p-20">
         <div className="w-[80rem] h-[40rem] flex">
@@ -104,7 +114,16 @@ const Hero = () => {
               </p>
             </div> */}
             {
-                <Countdown zeroPadDays={2} zeroPadTime={2} date={Date.now() + 3611000} renderer={renderer} />
+                <Countdown zeroPadDays={2} zeroPadTime={2} date={Date.parse('Fri Mar 22 2024 10:00:00 GMT')} renderer={renderer} />
+
+                // <Countdown
+                //     date={Date.parse('Fri Mar 22 2024 10:00:00 GMT')}
+                //     daysInHours={true}
+                //     zeroPadTime={3}
+                //     renderer={props => {
+                //         console.log(props);
+                //         return <div>{props.total}</div>;}}
+                // />
             }
 
 

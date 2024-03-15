@@ -19,7 +19,7 @@ const rpc = new RPC(CKB_RPC_URL)
 export default function ClaimPopup(props){
     const [toAddress, setToAddress] = React.useState('ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqq9t0nn77we5qsyjfagxv396wewa6cac5zvsz9q3r'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
     const [loading, setLoading] = React.useState(false);
-    const times = 200;
+    const times = 340;
     const {showPopup,claimType,openPop,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
     const anchorEl = document.getElementsByClassName('middle-main')[0];
@@ -119,7 +119,7 @@ export default function ClaimPopup(props){
             redirect: 'follow'
         };
 
-        fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claim/"+ chain, requestOptions)
+        fetch("https://seeu-nft-rest.matrixlabs.org/nfts/claim/"+ chain, requestOptions)
             .then(response => response.text())
             .then(result => {
                 const res = JSON.parse(result);

@@ -70,7 +70,7 @@ const mainSlice = createSlice({
                 headers: myHeaders,
                 redirect: 'follow'
             };
-            fetch("https://seeu-nft-rest-beta.matrixlabs.org/nfts/claimed/" + fullData.type + "/" + fullData.address, requestOptions)
+            fetch("https://seeu-nft-rest.matrixlabs.org/nfts/claimed/" + fullData.type + "/" + fullData.address, requestOptions)
                 .then(response => response.text())
                 .then(result => {
                     console.log(44444444444,result);

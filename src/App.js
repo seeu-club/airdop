@@ -30,9 +30,9 @@ import {
 } from "@tanstack/react-query";
 
 initConfig({
-    name: "JoyID demo",
+    name: "Unicorn",
     logo: "http://localhost:3000",
-    joyidAppURL: "https://testnet.joyid.dev",
+    joyidAppURL: "https://app.joy.id/",
 });
 const config = getDefaultConfig({
     appName: 'Seeu-club',
