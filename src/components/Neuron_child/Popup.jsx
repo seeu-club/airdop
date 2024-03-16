@@ -1,3 +1,5 @@
+"use strict";
+
 import React, {useState} from "react";
 import Typography from "@mui/material/Typography";
 import Popover from "@mui/material/Popover";
@@ -7,6 +9,8 @@ import {useSelector} from "react-redux";
 import store from "../../store";
 import {getClaimNum, saveNeuronAddress, saveNeuronClaimNum, saveNeuronSignature, savePopup} from "../../store/reducer";
 import {shortAddress} from "../../utils/global";
+import {Buffer} from 'buffer';
+
 
 
 
@@ -15,9 +19,52 @@ export default function Popup(props){
     const joyid_sign_msg = useSelector(store => store.joyid_sign_msg);
     const neuron_signature = useSelector(store => store.neuron_signature);
     const neuron_address = useSelector(store => store.neuron_address);
+    const [signature, setSignature] = React.useState(neuron_signature);
+    const [address, setAddress] = React.useState(neuron_address);
     const handleClick = () => {
-        if (neuron_signature && neuron_address) {
-            handleClose();
+        if (address && signature) {
+            var __assign = (this && this.__assign) || function () {
+                __assign = Object.assign || function(t) {
+                    for (var s, i = 1, n = arguments.length; i < n; i++) {
+                        s = arguments[i];
+                        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                            t[p] = s[p];
+                    }
+                    return t;
+                };
+                return __assign.apply(this, arguments);
+            };
+            // exports.__esModule = true;
+            var elliptic_1 = require("elliptic");
+            var ckb_sdk_utils_1 = require("@nervosnetwork/ckb-sdk-utils");
+            var blake160_1 = require("@nervosnetwork/ckb-sdk-utils/lib/crypto/blake160");
+            var ec = new elliptic_1.ec('secp256k1');
+            var BLAKE_2B_SIZE = 32;
+            var MAGIC_STRING = "Nervos Message:";
+            var recoverPk = function (message, signature) {
+                var r = signature.slice(2, 66);
+                var s = signature.slice(66, 130);
+                var recoveryParam = parseInt(signature.slice(-1));
+                var msg = Buffer.from(MAGIC_STRING + message, 'utf8');
+                var digest = (0, ckb_sdk_utils_1.blake2b)(BLAKE_2B_SIZE, null, null, ckb_sdk_utils_1.PERSONAL).update(msg).digest('binary');
+                return "0x" + ec.recoverPubKey(digest, { r: r, s: s }, recoveryParam).encode('hex', true);
+            };
+            var msg = joyid_sign_msg;
+            var sig= signature;
+            var recoveredPk = recoverPk(msg,sig);
+            /**
+             * Test recovered address
+             */
+            var secp256k1ScriptArgs = '0x' + Buffer.from((0, blake160_1["default"])(recoveredPk)).toString('hex');
+            var recoveredAddress = (0, ckb_sdk_utils_1.scriptToAddress)(__assign(__assign({}, ckb_sdk_utils_1.systemScripts.SECP256K1_BLAKE160), { args: secp256k1ScriptArgs }));
+            console.log(1111111111111,recoveredAddress,address);
+            if (recoveredAddress.toLowerCase() === address.toLowerCase()) {
+                store.dispatch(saveNeuronSignature(signature));
+                store.dispatch(saveNeuronAddress(address));
+                handleClose();
+            } else {
+                alert('Error signature or error address!');
+            }
         }
     };
 
@@ -91,8 +138,8 @@ export default function Popup(props){
                         <div>
                             <OutlinedInput
                                 fullWidth
-                                value={neuron_signature}
-                                onChange={event => store.dispatch(saveNeuronSignature(event.target.value))}
+                                value={signature}
+                                onChange={event => setSignature(event.target.value)}
                                 placeholder={'Signature'}
                                 id="component-outlined"
                             />
@@ -106,8 +153,8 @@ export default function Popup(props){
                                 <OutlinedInput
                                     fullWidth
                                     size="small"
-                                    value={neuron_address}
-                                    onChange={event => store.dispatch(saveNeuronAddress(event.target.value))}
+                                    value={address}
+                                    onChange={event => setAddress(event.target.value)}
                                     placeholder={'Account'}
                                     id="component-outlined"
                                 />
