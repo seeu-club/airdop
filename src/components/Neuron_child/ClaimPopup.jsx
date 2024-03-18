@@ -19,7 +19,6 @@ const rpc = new RPC(CKB_RPC_URL)
 export default function ClaimPopup(props){
     const [toAddress, setToAddress] = React.useState('ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq26z89hep8l4vsg5ttj7hcepnxxhy6yzns7ftt7q'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
     const [loading, setLoading] = React.useState(false);
-    const [retry, setRetry] = React.useState(1);
     const times = 340;
     const {showPopup,claimType,openPop,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
@@ -75,7 +74,7 @@ export default function ClaimPopup(props){
                     console.log('getFlag',res);
                     if (res) {
                         clearInterval(timeout);
-                        Claim(hash).then(re => {
+                        Claim(hash,3).then(re => {
                         })
                     }
                 })
@@ -83,15 +82,8 @@ export default function ClaimPopup(props){
             ,2000);
     }
 
-    const retryClaim = (hash) => {
-        if (retry > 2) {
-            return;
-        }
-        const retryTimes = retry + 1;
-        console.log('retry ' + retry);
-        setRetry(retryTimes);
-
-        Claim(hash).then(re => {
+    const retryClaim = (hash,retry_num) => {
+        Claim(hash,retry_num -1).then(re => {
 
         })
     }
@@ -109,7 +101,7 @@ export default function ClaimPopup(props){
 
     }
 
-    const Claim = async(hash) => {
+    const Claim = async(hash,retry_num) => {
         var myHeaders = new Headers();
         myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
         myHeaders.append("Content-Type", "application/json");
@@ -141,15 +133,18 @@ export default function ClaimPopup(props){
                 if (res.code === 'ok' || res.code === 'OK') {
                     openPop();
                     handleClose();
+                    setLoading(false);
+                } else if (retry_num > 0) {
+                    retryClaim(hash,retry_num);
+                } else {
+                    setLoading(false);
                 }
-                setLoading(false);
             })
             .catch((error) => {
                 console.log('claim error 123', error);
-                if (retry > 2) {
-                    return;
+                if (retry_num > 0) {
+                    retryClaim(hash,retry_num);
                 }
-                retryClaim(hash);
             });
     }
 
