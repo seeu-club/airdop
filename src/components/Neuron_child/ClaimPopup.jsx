@@ -19,6 +19,7 @@ const rpc = new RPC(CKB_RPC_URL)
 export default function ClaimPopup(props){
     const [toAddress, setToAddress] = React.useState('ckb1qzda0cr08m85hc8jlnfp3zer7xulejywt49kt2rr0vthywaa50xwsq26z89hep8l4vsg5ttj7hcepnxxhy6yzns7ftt7q'); //ckt1qrfrwcdnvssswdwpn3s9v8fp87emat306ctjwsm3nmlkjg8qyza2cqgqqxv6drphrp47xalweq9pvr6ll3mvkj225quegpcw
     const [loading, setLoading] = React.useState(false);
+    const [retry, setRetry] = React.useState(1);
     const times = 340;
     const {showPopup,claimType,openPop,close} = props;
     const joyid_account = useSelector(store => store.joyid_account);
@@ -82,6 +83,19 @@ export default function ClaimPopup(props){
             ,2000);
     }
 
+    const retryClaim = (hash) => {
+        if (retry > 2) {
+            return;
+        }
+        const retryTimes = retry + 1;
+        console.log('retry ' + retry);
+        setRetry(retryTimes);
+
+        Claim(hash).then(re => {
+
+        })
+    }
+
     const getFlag = async (hash)=>{
             return await rpc.getTransaction(hash).then((res)=> {
                 console.log('result',res.txStatus.status,hash);
@@ -130,7 +144,13 @@ export default function ClaimPopup(props){
                 }
                 setLoading(false);
             })
-            .catch(error => console.log('claim error 123', error));
+            .catch((error) => {
+                console.log('claim error 123', error);
+                if (retry > 2) {
+                    return;
+                }
+                retryClaim(hash);
+            });
     }
 
     const open = Boolean(showPopup);
