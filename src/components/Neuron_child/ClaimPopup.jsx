@@ -74,12 +74,18 @@ export default function ClaimPopup(props){
                     console.log('getFlag',res);
                     if (res) {
                         clearInterval(timeout);
-                        Claim(hash).then(re => {
+                        Claim(hash,3).then(re => {
                         })
                     }
                 })
             }
             ,2000);
+    }
+
+    const retryClaim = (hash,retry_num) => {
+        Claim(hash,retry_num -1).then(re => {
+
+        })
     }
 
     const getFlag = async (hash)=>{
@@ -95,7 +101,7 @@ export default function ClaimPopup(props){
 
     }
 
-    const Claim = async(hash) => {
+    const Claim = async(hash,retry_num) => {
         var myHeaders = new Headers();
         myHeaders.append("User-Agent", "Apidog/1.0.0 (https://apidog.com)");
         myHeaders.append("Content-Type", "application/json");
@@ -127,10 +133,19 @@ export default function ClaimPopup(props){
                 if (res.code === 'ok' || res.code === 'OK') {
                     openPop();
                     handleClose();
+                    setLoading(false);
+                } else if (retry_num > 0) {
+                    retryClaim(hash,retry_num);
+                } else {
+                    setLoading(false);
                 }
-                setLoading(false);
             })
-            .catch(error => console.log('claim error 123', error));
+            .catch((error) => {
+                console.log('claim error 123', error);
+                if (retry_num > 0) {
+                    retryClaim(hash,retry_num);
+                }
+            });
     }
 
     const open = Boolean(showPopup);
