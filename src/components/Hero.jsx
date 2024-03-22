@@ -141,10 +141,11 @@ const Hero = () => {
                     <img src="/logo-small.png" alt="buttonpng" border="0" width={28} height={28}  />
               </button>
             </div>
+              {Date.parse('Fri Mar 22 2024 10:00:00 GMT') >= Date.now() ? (            <p className="font-bold text-lg mt-3 text-[#727778] font-['NationalPark']">The total supply of Unicorn DOBs is 21,000: 20% airdrop, 80% will be obtained through staking mining.</p>
+              ) :             <p className="font-bold text-lg mt-3 text-[#727778] font-['NationalPark']">The number of claims is equal to the total amount of Unicorn DOBs, and all remaining are burned.</p>
+              }
 
 
-            <p className="font-bold text-lg mt-3 text-[#727778] font-['NationalPark']">The total supply of Unicorn DOBs is 21,000: 20% airdrop, 80% will be obtained through staking mining.</p>
-         
             {/*<button className="bg-gradient-to-b from-[#07CEFA] to-[#0794FA] hover:from-[#FE609D] hover:to-yellow-500  text-white font-bold w-[10rem] h-[3.5rem] py-3 px-4 rounded-2xl font-bold text-xl mt-6">*/}
             {/*  Mint*/}
             {/*</button>*/}

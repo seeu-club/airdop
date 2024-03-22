@@ -53,6 +53,12 @@ export default function ClaimPopup(props){
     }
 
     const handleClick = async () => {
+
+        if (Date.parse('Fri Mar 22 2024 10:00:00 GMT') <= Date.now()) {
+            alert('Timeout!');
+            return;
+        }
+
         setLoading(true);
         const signedTx = await signTransaction({
             to: toAddress,
