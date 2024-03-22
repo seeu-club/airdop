@@ -209,7 +209,7 @@ export default function Seeu(){
         <UlBox>
             <Joyid/>
             <Unisat_okx/>
-            <ButtonBox onClick={Claim} disabled={!account || !joyid_account || seeu_claim_num <= 0 }>Claim</ButtonBox>
+            <ButtonBox onClick={Claim} disabled={!account || !joyid_account || seeu_claim_num <= 0  || (Date.parse('Fri Mar 22 2024 10:00:00 GMT') <= Date.now())}>Claim</ButtonBox>
 
         </UlBox>
 

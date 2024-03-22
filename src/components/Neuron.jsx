@@ -110,9 +110,10 @@ export default function Neuron(){
 
 
     function getSign() {
-        if (neuronClaimNum <= 0) {
+        if (neuronClaimNum <= 0 || (Date.parse('Fri Mar 22 2024 10:00:00 GMT') <= Date.now())) {
             return;
         }
+
         if (neuronAddress) {
             setShowClaimPopup(true);
             return;
@@ -345,7 +346,7 @@ export default function Neuron(){
                         </>)}
                     </div>
                     <div>
-                        <Button onClick={getSign} disabled={!joyid_account || (!account && !neuronAddress) || neuronClaimNum <=0 } className={joyid_account && (account || neuronAddress) && neuronClaimNum > 0  ? "Claim-button claim-active-button" : "Claim-button"} variant="contained">
+                        <Button onClick={getSign} disabled={!joyid_account || (!account && !neuronAddress) || neuronClaimNum <=0 || (Date.parse('Fri Mar 22 2024 10:00:00 GMT') <= Date.now())} className={joyid_account && (account || neuronAddress) && neuronClaimNum > 0  ? "Claim-button claim-active-button" : "Claim-button"} variant="contained">
                             Claim
                         </Button>
                     </div>
